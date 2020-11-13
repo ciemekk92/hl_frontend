@@ -1,8 +1,9 @@
 import React from 'react';
-import LogoSmall from '../../components/UI/LogoSmall';
+import MainLayout from '../../templates/MainLayout/MainLayout';
+import LogoSmall from '../../components/UI/LogoSmall/LogoSmall';
 
-function App() {
-    return <div className="App">...</div>;
-}
+const App: React.FC = () => {
+    return <MainLayout />;
+};
 
 export default App;
