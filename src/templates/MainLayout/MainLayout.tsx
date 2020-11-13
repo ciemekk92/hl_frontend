@@ -7,6 +7,7 @@ import Sidebar from '../../containers/Sidebar/Sidebar';
 import Modal from '../../components/UI/Modal/Modal';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import Landing from '../../views/Landing/Landing';
+import Login from '../../containers/Login/Login';
 
 const MainLayout: React.FC = (props) => {
     const modalRef: React.Ref<HTMLDivElement> = useRef(null);
@@ -47,10 +48,10 @@ const MainLayout: React.FC = (props) => {
             <ThemeProvider theme={colorTheme}>
                 <Wrapper>
                     <Modal open={openModal} ref={modalRef}>
-                        {/*<Login
+                        <Login
                             clickedCancel={closeLoginModal}
                             isLogin={isModalLogin}
-                        />*/}
+                        />
                     </Modal>
                     {loggedOutView}
                     {/* Routes here*/}

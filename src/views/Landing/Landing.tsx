@@ -1,5 +1,9 @@
 import React from 'react';
-import { LoginButton, LoginButtonsContainer, Wrapper } from './Landing.styled';
+import {
+    LandingLoginButton,
+    LoginButtonsContainer,
+    Wrapper
+} from './Landing.styled';
 import LogoLarge from '../../components/UI/LogoLarge/LogoLarge';
 
 interface LandingProps {
@@ -17,12 +21,12 @@ const Landing: React.FC<LandingProps> = (props) => {
                 style={{ margin: '2rem 0 15rem' }}
             />
             <LoginButtonsContainer>
-                <LoginButton onClick={() => toggleLogin(true)}>
+                <LandingLoginButton onClick={() => toggleLogin(true)}>
                     Logowanie
-                </LoginButton>
-                <LoginButton onClick={() => toggleLogin(false)}>
+                </LandingLoginButton>
+                <LandingLoginButton onClick={() => toggleLogin(false)}>
                     Rejestracja
-                </LoginButton>
+                </LandingLoginButton>
             </LoginButtonsContainer>
         </Wrapper>
     );
