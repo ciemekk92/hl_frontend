@@ -6,15 +6,27 @@ import Header from '../../containers/Header/Header';
 import Sidebar from '../../containers/Sidebar/Sidebar';
 import Modal from '../../components/UI/Modal/Modal';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
+import Landing from '../../views/Landing/Landing';
 
 const MainLayout: React.FC = (props) => {
     const modalRef: React.Ref<HTMLDivElement> = useRef(null);
+
+    const [openModal, setOpenModal] = useState(false);
+    const [isModalLogin, setIsModalLogin] = useState(true);
 
     useOutsideClick(modalRef, () => {
         setOpenModal(false);
     });
 
-    const [openModal, setOpenModal] = useState(false);
+    const openLoginModal = (isLogin: boolean) => {
+        setIsModalLogin(isLogin);
+        setOpenModal(true);
+    };
+
+    const closeLoginModal = () => {
+        setOpenModal(false);
+    };
+
     const loggedInView = (
         <>
             <Header />
@@ -26,12 +38,21 @@ const MainLayout: React.FC = (props) => {
         </>
     );
 
+    const loggedOutView = (
+        <Landing toggleLogin={(isLogin: boolean) => openLoginModal(isLogin)} />
+    );
+
     return (
         <React.Suspense fallback={'Loading...'}>
             <ThemeProvider theme={colorTheme}>
                 <Wrapper>
-                    <Modal open={openModal} ref={modalRef} />
-                    {loggedInView}
+                    <Modal open={openModal} ref={modalRef}>
+                        {/*<Login
+                            clickedCancel={closeLoginModal}
+                            isLogin={isModalLogin}
+                        />*/}
+                    </Modal>
+                    {loggedOutView}
                     {/* Routes here*/}
                 </Wrapper>
             </ThemeProvider>
