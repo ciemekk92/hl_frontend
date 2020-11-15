@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Wrapper, LoginContainer, Row, Text, Warning } from './Login.styled';
 import { CSSTransition } from 'react-transition-group';
 import { updateObject } from '../../shared/utility';
 import '../../transitions/transitions.css';
 import LoginInput from '../../components/UI/Login/LoginInput/LoginInput';
 import LoginButton from '../../components/UI/Login/LoginButton/LoginButton';
+import { authService } from '../../services/authService';
 
 interface LoginProps {
     clickedCancel: () => void;
@@ -58,6 +59,14 @@ const Login: React.FC<LoginProps> = (props) => {
         }
 
         login ? setLoginData(updatedData) : setSignupData(updatedData);
+    };
+
+    const loginHandler = async () => {
+        await authService
+            .login(loginData.email, loginData.password)
+            .then(() => {
+                clickedCancel();
+            });
     };
 
     const login = (
@@ -137,7 +146,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 </CSSTransition>
                 {isLogin ? login : signup}
                 <Row>
-                    <LoginButton clicked={isLogin ? () => {} : () => {}}>
+                    <LoginButton clicked={isLogin ? loginHandler : () => {}}>
                         {isLogin ? 'Zaloguj się' : 'Zarejestruj się'}
                     </LoginButton>
                     <LoginButton clicked={clickedCancel}>Anuluj</LoginButton>
