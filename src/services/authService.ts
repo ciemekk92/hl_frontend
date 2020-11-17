@@ -40,19 +40,56 @@ const login = async (email: string, password: string) => {
             token: responseData.token,
             tokenExpires: responseData.tokenExpires
         });
+
+        setTimeout(() => {
+            refresh();
+        }, responseData.tokenExpires * 0.95);
     } catch (err) {
         console.log(err);
     }
 };
 
-function logout() {
+const logout = () => {
     store.dispatch(setLogout());
-    currentUserSubject.next(null);
+    currentUserSubject.next({
+        name: '',
+        email: '',
+        role: '',
+        token: '',
+        tokenExpires: ''
+    });
+    // TODO invalidate refresh token
+};
+
+async function refresh() {
+    try {
+        const axiosResponse = await axiosInstance.post('/users/refresh');
+        const res = await handleResponse(axiosResponse);
+
+        await currentUserSubject.next({
+            name: res!.userInfo.name,
+            email: res!.userInfo.email,
+            role: res!.userInfo.role,
+            token: res!.token,
+            tokenExpires: res!.tokenExpires
+        });
+
+        await store.dispatch(
+            setLoginInfo(res!.userInfo, res!.token, res!.tokenExpires)
+        );
+        setTimeout(() => {
+            refresh();
+        }, res!.tokenExpires * 0.95);
+        console.log(3, currentUserSubject.value);
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 export const authService = {
     login,
     logout,
+    refresh,
     currentUser: currentUserSubject.asObservable(),
     get currentUserValue() {
         return currentUserSubject.value;

@@ -1,7 +1,9 @@
 import { authService } from '../services/authService';
 import { AxiosResponse } from 'axios';
 
-export function handleResponse(res: AxiosResponse) {
+export const handleResponse = (res: AxiosResponse) => {
+    // TODO 401 error handling
+
     const data = res.data.data.user;
 
     if (res.statusText !== 'OK') {
@@ -19,6 +21,7 @@ export function handleResponse(res: AxiosResponse) {
     return {
         userInfo: data,
         token: res.data.token,
-        tokenExpires: res.data.expires
+        tokenExpires: res.data.expires,
+        status: res.status
     };
-}
+};

@@ -76,7 +76,7 @@ const MainLayout: React.FC = (props) => {
                                 isLogin={isModalLogin}
                             />
                         </Modal>
-                        {currentUser!.token! !== ''
+                        {currentUser.token !== ''
                             ? loggedInView
                             : loggedOutView}
                         {/* Routes here*/}

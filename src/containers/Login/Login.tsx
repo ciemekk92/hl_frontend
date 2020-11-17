@@ -146,7 +146,15 @@ const Login: React.FC<LoginProps> = (props) => {
                 </CSSTransition>
                 {isLogin ? login : signup}
                 <Row>
-                    <LoginButton clicked={isLogin ? loginHandler : () => {}}>
+                    <LoginButton
+                        clicked={
+                            isLogin
+                                ? loginHandler
+                                : () => {
+                                      authService.refresh();
+                                  }
+                        }
+                    >
                         {isLogin ? 'Zaloguj się' : 'Zarejestruj się'}
                     </LoginButton>
                     <LoginButton clicked={clickedCancel}>Anuluj</LoginButton>
