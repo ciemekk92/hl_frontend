@@ -1,0 +1,35 @@
+.max-height-small-enter {
+    max-height: 0;
+}
+
+.max-height-small-enter-active {
+    max-height: 20rem;
+    transition: all 0.4s ease;
+}
+
+.max-height-small-exit {
+    max-height: 20rem;
+}
+
+.max-height-small-exit-active {
+    max-height: 0;
+    transition: all 0.4s ease;
+}
+
+.opacity-enter {
+    opacity: 0;
+}
+
+.opacity-enter-active {
+    opacity: 1;
+    transition: all 0.4s ease;
+}
+
+.opacity-exit {
+    opacity: 1;
+}
+
+.opacity-exit-active {
+    opacity: 0;
+    transition: all 0.4s ease;
+}

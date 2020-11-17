@@ -16,7 +16,7 @@ export const LoginButtonsContainer = styled.div`
     justify-content: space-evenly;
 `;
 
-export const LoginButton = styled.button`
+export const LandingLoginButton = styled.button`
     width: 15rem;
     height: 4rem;
     border: none;
