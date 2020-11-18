@@ -1,5 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import userReducer from './reducers/user';
+import dataReducer from './reducers/data';
 import thunk from 'redux-thunk';
 
 declare global {
@@ -13,7 +14,7 @@ const composeEnhancers =
         ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
         : compose;
 
-const rootReducer = combineReducers({ user: userReducer });
+const rootReducer = combineReducers({ user: userReducer, data: dataReducer });
 export const store = createStore(
     rootReducer,
     composeEnhancers?.(applyMiddleware(thunk))

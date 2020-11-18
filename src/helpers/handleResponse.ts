@@ -9,7 +9,8 @@ export const handleResponse = (res: AxiosResponse) => {
     if (res.statusText !== 'OK') {
         if ([401, 403].indexOf(res.status) !== -1) {
             // auto logout if response returned 401 or 403
-            authService.logout();
+            //authService.logout();
+
             // eslint-disable-next-line
             location.reload();
         }

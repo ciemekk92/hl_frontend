@@ -1,5 +1,5 @@
 import { store } from '../store/store';
-import axiosInstance from '../helpers/axiosInstance/axiosInstance';
+import axiosInstanceAuth from '../helpers/axiosInstances/axiosInstanceAuth';
 import { handleResponse } from '../helpers/handleResponse';
 import { setLoginInfo, setLogout } from '../store/actions/actions';
 import { BehaviorSubject } from 'rxjs';
@@ -19,7 +19,7 @@ const login = async (email: string, password: string) => {
             token: string;
             tokenExpires: number;
         } = await handleResponse(
-            await axiosInstance.post(
+            await axiosInstanceAuth.post(
                 '/users/login',
                 { email: email, password: password },
                 { headers: { 'Content-Type': 'application/json' } }
@@ -49,7 +49,7 @@ const login = async (email: string, password: string) => {
     }
 };
 
-const logout = () => {
+const logout = async () => {
     store.dispatch(setLogout());
     currentUserSubject.next({
         name: '',
@@ -58,12 +58,13 @@ const logout = () => {
         token: '',
         tokenExpires: ''
     });
+    await axiosInstanceAuth.post('/users/logout');
     // TODO invalidate refresh token
 };
 
 async function refresh() {
     try {
-        const axiosResponse = await axiosInstance.post('/users/refresh');
+        const axiosResponse = await axiosInstanceAuth.post('/users/refresh');
         const res = await handleResponse(axiosResponse);
 
         await currentUserSubject.next({
@@ -80,7 +81,6 @@ async function refresh() {
         setTimeout(() => {
             refresh();
         }, res!.tokenExpires * 0.95);
-        console.log(3, currentUserSubject.value);
     } catch (err) {
         console.log(err);
     }

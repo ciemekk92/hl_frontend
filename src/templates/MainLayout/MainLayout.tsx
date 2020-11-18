@@ -13,6 +13,7 @@ import { authService } from '../../services/authService';
 import { Role } from '../../helpers/role';
 import { history } from '../../helpers';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
+import { dataService } from '../../services/dataService';
 
 const MainLayout: React.FC = (props) => {
     // TODO: silent refresh, signing up, logging out, role splitting
@@ -57,6 +58,13 @@ const MainLayout: React.FC = (props) => {
             <Main>
                 {/*<Dashboard />*/}
                 Main view goes here
+                <button
+                    onClick={() => {
+                        dataService.getAllProducts();
+                    }}
+                >
+                    Get all products
+                </button>
             </Main>
         </>
     );

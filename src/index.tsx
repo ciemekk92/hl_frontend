@@ -12,9 +12,7 @@ import { store } from './store/store';
 
 const app = (
     <Provider store={store}>
-        <React.StrictMode>
-            <App />
-        </React.StrictMode>
+        <App />
     </Provider>
 );
 
