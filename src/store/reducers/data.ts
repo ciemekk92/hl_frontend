@@ -44,7 +44,7 @@ const setQuestionsInfo = (state: DataState, action: SetQuestionsInfoAction) => {
     });
 };
 
-/// Reducer
+// Reducer
 const reducer = (state = initialState, action: DataActionTypes) => {
     switch (action.type) {
         case SET_PRODUCT_INFO:

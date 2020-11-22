@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Wrapper } from './Sidebar.styled';
+import { StyledLink, Wrapper } from './Sidebar.styled';
 import { connect, ConnectedProps } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import { v4 as uuidv4 } from 'uuid';
@@ -24,7 +24,9 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
     const [areLocationsShown, setAreLocationsShown] = useState(false);
 
     const productMapHandler = products.map((element: Product) => (
-        <SidebarPanel key={uuidv4()}>{element.name}</SidebarPanel>
+        <StyledLink key={uuidv4()} to={`/products/${element.slug}`}>
+            <SidebarPanel>{element.name}</SidebarPanel>
+        </StyledLink>
     ));
 
     const productLoadHandler = async () => {

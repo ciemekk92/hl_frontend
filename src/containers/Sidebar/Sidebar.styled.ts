@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Wrapper = styled.div`
     width: 100%;
@@ -10,4 +11,8 @@ export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+`;
+
+export const StyledLink = styled(Link)`
+    text-decoration: none;
 `;

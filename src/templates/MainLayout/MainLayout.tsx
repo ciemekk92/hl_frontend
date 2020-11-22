@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Router, Route, Link } from 'react-router-dom';
+import { Router, Route, BrowserRouter, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { colorTheme } from '../../themes/colorTheme';
 import { Main, Wrapper } from './MainLayout.styled';
@@ -9,11 +9,10 @@ import Modal from '../../components/UI/Modal/Modal';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import Landing from '../../views/Landing/Landing';
 import Login from '../../containers/Login/Login';
-import { authService } from '../../services/authService';
+import { authService } from '../../services';
 import { Role } from '../../helpers/role';
 import { history } from '../../helpers';
-import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
-import { dataService } from '../../services/dataService';
+import Routes from '../../routes/routes';
 
 const MainLayout: React.FC = (props) => {
     // TODO: silent refresh, signing up, logging out, role splitting
@@ -52,21 +51,21 @@ const MainLayout: React.FC = (props) => {
     };
 
     const loggedInView = (
-        <>
-            <Header />
-            <Sidebar />
-            <Main>
-                {/*<Dashboard />*/}
-                Main view goes here
-                <button
-                    onClick={() => {
-                        dataService.getAllProducts();
-                    }}
-                >
-                    Get all products
-                </button>
-            </Main>
-        </>
+        <BrowserRouter>
+            <Route
+                render={(props) => (
+                    <>
+                        <Header />
+                        <Sidebar />
+                        <Switch>
+                            <Main>
+                                <Routes {...props} />
+                            </Main>
+                        </Switch>
+                    </>
+                )}
+            />
+        </BrowserRouter>
     );
 
     const loggedOutView = (

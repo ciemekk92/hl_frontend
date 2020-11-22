@@ -1,6 +1,6 @@
 import { store } from '../store/store';
 import axiosInstanceAuth from '../helpers/axiosInstances/axiosInstanceAuth';
-import { handleResponse } from '../helpers/handleResponse';
+import { handleResponse } from '../helpers';
 import { setLoginInfo, setLogout } from '../store/actions/actions';
 import { BehaviorSubject } from 'rxjs';
 
