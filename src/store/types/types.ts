@@ -22,12 +22,12 @@ export interface Ingredient {
 
 export interface DetailedInfo {
     name: string;
-    details: string;
+    details: string[];
 }
 
 export interface ProductQuestion {
     question: string;
-    answer: string;
+    answer: string[];
 }
 
 export interface Product {

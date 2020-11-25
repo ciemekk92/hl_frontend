@@ -9,6 +9,11 @@ export const Wrapper = styled.header`
     grid-column: 1 / 3;
     display: flex;
     justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.4);
+    z-index: 20;
 `;
 
 export const LogoContainer = styled.div`

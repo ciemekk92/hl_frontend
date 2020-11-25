@@ -20,16 +20,22 @@ interface ProductViewProps {
 
 const ProductView: React.FC<ProductViewProps> = (props) => {
     const { product } = props;
+
     return (
         <Wrapper>
             <Heading2>{product.name}</Heading2>
             <Heading3>Składniki:</Heading3>
             <Table>
+                <colgroup>
+                    <col span={1} style={{ width: '70%' }} />
+                    <col span={1} style={{ width: '15%' }} />
+                    <col span={1} style={{ width: '15%' }} />
+                </colgroup>
                 <thead>
                     <TRow>
                         <THeader>Składnik</THeader>
                         <THeader>Ilość</THeader>
-                        <THeader>% ZDS</THeader>
+                        <THeader>% RWS</THeader>
                     </TRow>
                 </thead>
                 <tbody>
@@ -44,9 +50,13 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
             </Table>
             <Heading3>Stosowanie</Heading3>
             <UnorderedList>
-                {product.dosage.map((element) => (
-                    <DetailedList key={element.name} element={element} />
-                ))}
+                {product.dosage.map((element, index) =>
+                    index === 0 && element.details.length === 0 ? (
+                        <p>{element.name}</p>
+                    ) : (
+                        <DetailedList key={element.name} element={element} />
+                    )
+                )}
             </UnorderedList>
             <Heading3>Skutki uboczne</Heading3>
             <UnorderedList>

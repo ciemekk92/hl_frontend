@@ -11,6 +11,7 @@ export const Panel = styled.div`
     color: ${(props) => props.theme.primaryDark};
     cursor: pointer;
     background-color: ${(props) => props.theme.secondaryLight};
+    border-bottom: 1px solid ${(props) => props.theme.primaryDark};
 
     &:hover {
         background-color: ${(props) => props.theme.secondaryMedium};

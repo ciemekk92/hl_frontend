@@ -1,4 +1,3 @@
-import { authService } from '../services/authService';
 import { AxiosResponse } from 'axios';
 
 export const handleResponse = (res: AxiosResponse) => {

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { authService } from '../../services/authService';
 import { store } from '../../store/store';
 
 const axiosInstanceData = axios.create({

@@ -16,12 +16,14 @@ const DetailedList: React.FC<ListProps> = (props) => {
             ? { name: element.question, details: element.answer }
             : element;
 
+    let newName = typedElement.name.split('\n').map((el) => <p>{el}</p>);
+
     const [showDetails, setShowDetails] = useState(false);
     return (
         <React.Fragment>
             <ListItem>
                 {typedElement.name}{' '}
-                {typedElement.details ? (
+                {typedElement.details.length > 0 ? (
                     <ToggleDetails onClick={() => setShowDetails(!showDetails)}>
                         Dlaczego?
                     </ToggleDetails>
