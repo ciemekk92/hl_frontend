@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 export const Panel = styled.div`
     width: 100%;
-    height: 3rem;
+    height: 3.6rem;
     transition: all 0.4s ease;
+    font-size: 1.4rem;
     display: flex;
     align-items: center;
     justify-content: start;

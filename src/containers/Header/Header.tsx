@@ -1,7 +1,8 @@
 import React from 'react';
 import { Wrapper, ButtonsContainer, LogoContainer } from './Header.styled';
-import LogoSmall from '../../components/UI/LogoSmall/LogoSmall';
 import LogoLarge from '../../components/UI/LogoLarge/LogoLarge';
+import IconUser from '../../components/UI/Icons/IconUser';
+import HeaderButton from '../../components/Header/HeaderButton/HeaderButton';
 
 const Header: React.FC = (props) => {
     return (
@@ -9,7 +10,12 @@ const Header: React.FC = (props) => {
             <LogoContainer>
                 <LogoLarge color={'#000'} title={'Logo'} size={32} />
             </LogoContainer>
-            <ButtonsContainer>Buttons go here</ButtonsContainer>
+            <ButtonsContainer>
+                <HeaderButton
+                    icon={<IconUser size={32} title={'User'} color={'#000'} />}
+                    clicked={() => {}}
+                />
+            </ButtonsContainer>
         </Wrapper>
     );
 };

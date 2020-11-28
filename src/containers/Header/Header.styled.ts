@@ -30,7 +30,6 @@ export const LogoContainer = styled.div`
 `;
 
 export const ButtonsContainer = styled.div`
-    width: 7%;
     height: 6rem;
     margin: auto 4rem auto 0;
     display: flex;
