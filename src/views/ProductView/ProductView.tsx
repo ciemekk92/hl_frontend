@@ -13,6 +13,7 @@ import {
     TCell
 } from '../../components/UI/Product/Table/ProductTable.styled';
 import DetailedList from '../../components/UI/DetailedList/DetailedList';
+import { v4 as uuidv4 } from 'uuid';
 
 interface ProductViewProps {
     product: Product;
@@ -52,7 +53,7 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
             <UnorderedList>
                 {product.dosage.map((element, index) =>
                     index === 0 && element.details.length === 0 ? (
-                        <p>{element.name}</p>
+                        <p key={uuidv4()}>{element.name}</p>
                     ) : (
                         <DetailedList key={element.name} element={element} />
                     )

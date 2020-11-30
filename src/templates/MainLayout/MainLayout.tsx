@@ -13,9 +13,13 @@ import { authService } from '../../services';
 import { Role } from '../../helpers/role';
 import { history } from '../../helpers';
 import Routes from '../../routes/routes';
+import ChangePassword from '../../containers/ChangePassword/ChangePassword';
+import { modalContext } from '../../context/modalContext';
+
+const { Provider } = modalContext;
 
 const MainLayout: React.FC = (props) => {
-    // TODO: silent refresh, signing up, logging out, role splitting
+    // TODO:  signing up, role splitting
     const modalRef: React.Ref<HTMLDivElement> = useRef(null);
 
     const [currentUser, setCurrentUser] = useState({
@@ -46,8 +50,12 @@ const MainLayout: React.FC = (props) => {
         setOpenModal(true);
     };
 
-    const closeLoginModal = () => {
+    const closeModal = () => {
         setOpenModal(false);
+    };
+
+    const handleModalOpen = () => {
+        setOpenModal(!openModal);
     };
 
     const loggedInView = (
@@ -62,6 +70,9 @@ const MainLayout: React.FC = (props) => {
                                 <Routes {...props} />
                             </Main>
                         </Switch>
+                        <Modal open={openModal} ref={modalRef}>
+                            <ChangePassword clickedCancel={closeModal} />
+                        </Modal>
                     </>
                 )}
             />
@@ -69,27 +80,29 @@ const MainLayout: React.FC = (props) => {
     );
 
     const loggedOutView = (
-        <Landing toggleLogin={(isLogin: boolean) => openLoginModal(isLogin)} />
+        <>
+            <Landing
+                toggleLogin={(isLogin: boolean) => openLoginModal(isLogin)}
+            />
+            <Modal open={openModal} ref={modalRef}>
+                <Login clickedCancel={closeModal} isLogin={isModalLogin} />
+            </Modal>
+        </>
     );
 
     return (
         <React.Suspense fallback={'Loading...'}>
-            <Router history={history}>
-                <ThemeProvider theme={colorTheme}>
-                    <Wrapper>
-                        <Modal open={openModal} ref={modalRef}>
-                            <Login
-                                clickedCancel={closeLoginModal}
-                                isLogin={isModalLogin}
-                            />
-                        </Modal>
-                        {currentUser.token !== ''
-                            ? loggedInView
-                            : loggedOutView}
-                        {/* Routes here*/}
-                    </Wrapper>
-                </ThemeProvider>
-            </Router>
+            <Provider value={{ handleModalOpen }}>
+                <Router history={history}>
+                    <ThemeProvider theme={colorTheme}>
+                        <Wrapper>
+                            {currentUser.token !== ''
+                                ? loggedInView
+                                : loggedOutView}
+                        </Wrapper>
+                    </ThemeProvider>
+                </Router>
+            </Provider>
         </React.Suspense>
     );
 };

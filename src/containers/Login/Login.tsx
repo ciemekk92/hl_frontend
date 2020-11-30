@@ -1,11 +1,17 @@
 import React, { useState, useRef } from 'react';
-import { Wrapper, LoginContainer, Row, Text, Warning } from './Login.styled';
+import {
+    Wrapper,
+    ModalContainer,
+    Row,
+    Text,
+    Warning
+} from '../../components/UI/Modal/Modal.styled';
 import { CSSTransition } from 'react-transition-group';
 import { updateObject } from '../../shared/utility';
 import '../../transitions/transitions.css';
-import LoginInput from '../../components/UI/Login/LoginInput/LoginInput';
-import LoginButton from '../../components/UI/Login/LoginButton/LoginButton';
-import { authService } from '../../services/authService';
+import ModalInput from '../../components/UI/Modal/ModalInput/ModalInput';
+import ModalButton from '../../components/UI/Modal/ModalButton/ModalButton';
+import { authService } from '../../services';
 
 interface LoginProps {
     clickedCancel: () => void;
@@ -75,7 +81,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 <Text>Zaloguj się, aby uzyskać dostęp do aplikacji.</Text>
             </Row>
             <Row>
-                <LoginInput
+                <ModalInput
                     name="email"
                     type="email"
                     placeholder="Adres e-mail"
@@ -86,7 +92,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 />
             </Row>
             <Row>
-                <LoginInput
+                <ModalInput
                     name="password"
                     type="password"
                     changed={(event: React.ChangeEvent) =>
@@ -105,7 +111,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 <Text>Utwórz konto podając odpowiednie dane poniżej.</Text>
             </Row>
             <Row>
-                <LoginInput
+                <ModalInput
                     name="name"
                     type="text"
                     changed={(event: React.ChangeEvent) =>
@@ -116,7 +122,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 />
             </Row>
             <Row>
-                <LoginInput
+                <ModalInput
                     name="email"
                     type="email"
                     changed={(event: React.ChangeEvent) =>
@@ -131,9 +137,11 @@ const Login: React.FC<LoginProps> = (props) => {
 
     const nodeRef = useRef(null);
 
+    // TODO Signup
+
     return (
         <Wrapper>
-            <LoginContainer>
+            <ModalContainer>
                 <CSSTransition
                     nodeRef={nodeRef}
                     in={warning.shown}
@@ -146,7 +154,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 </CSSTransition>
                 {isLogin ? login : signup}
                 <Row>
-                    <LoginButton
+                    <ModalButton
                         clicked={
                             isLogin
                                 ? loginHandler
@@ -156,10 +164,10 @@ const Login: React.FC<LoginProps> = (props) => {
                         }
                     >
                         {isLogin ? 'Zaloguj się' : 'Zarejestruj się'}
-                    </LoginButton>
-                    <LoginButton clicked={clickedCancel}>Anuluj</LoginButton>
+                    </ModalButton>
+                    <ModalButton clicked={clickedCancel}>Anuluj</ModalButton>
                 </Row>
-            </LoginContainer>
+            </ModalContainer>
         </Wrapper>
     );
 };

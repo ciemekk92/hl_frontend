@@ -7,8 +7,8 @@ interface ButtonProps {
 }
 
 const HeaderButton: React.FC<ButtonProps> = (props) => {
-    const { icon } = props;
-    return <Background>{icon}</Background>;
+    const { icon, clicked } = props;
+    return <Background onMouseEnter={clicked}>{icon}</Background>;
 };
 
 export default HeaderButton;

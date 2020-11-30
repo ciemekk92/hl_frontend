@@ -62,6 +62,50 @@ const logout = async () => {
     // TODO invalidate refresh token
 };
 
+const changePassword = async (passwordData: {
+    currentPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+}) => {
+    try {
+        const responseData: {
+            userInfo: any;
+            token: string;
+            tokenExpires: number;
+        } = await handleResponse(
+            await axiosInstanceAuth.patch(
+                '/users/updatePassword',
+                {
+                    passwordCurrent: passwordData.currentPassword,
+                    password: passwordData.newPassword,
+                    passwordConfirm: passwordData.confirmPassword
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${currentUserSubject.value.token}`
+                    }
+                }
+            )
+        );
+
+        await store.dispatch(
+            setLoginInfo(
+                responseData.userInfo,
+                responseData.token,
+                responseData.tokenExpires
+            )
+        );
+
+        await currentUserSubject.next({
+            ...currentUserSubject.value,
+            token: responseData.token,
+            tokenExpires: responseData.tokenExpires
+        });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 async function refresh() {
     try {
         const axiosResponse = await axiosInstanceAuth.post('/users/refresh');
@@ -90,6 +134,7 @@ export const authService = {
     login,
     logout,
     refresh,
+    changePassword,
     currentUser: currentUserSubject.asObservable(),
     get currentUserValue() {
         return currentUserSubject.value;

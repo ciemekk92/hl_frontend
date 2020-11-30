@@ -1,14 +1,14 @@
 import React from 'react';
-import { Button } from './LoginButton.styled';
+import { Button } from './ModalButton.styled';
 
 interface LoginButtonProps {
     clicked: () => void;
 }
 
-const LoginButton: React.FC<LoginButtonProps> = (props) => {
+const ModalButton: React.FC<LoginButtonProps> = (props) => {
     const { clicked } = props;
 
     return <Button onClick={clicked}>{props.children}</Button>;
 };
 
-export default LoginButton;
+export default ModalButton;

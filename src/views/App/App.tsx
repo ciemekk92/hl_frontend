@@ -4,6 +4,7 @@ import axiosInstanceAuth from '../../helpers/axiosInstances/axiosInstanceAuth';
 import { authService } from '../../services';
 import { history } from '../../helpers';
 import cookie from 'react-cookies';
+import { store } from '../../store/store';
 
 const App: React.FC = () => {
     useEffect(() => {
@@ -11,6 +12,8 @@ const App: React.FC = () => {
         const getCsrfToken = async () => {
             const { data } = await axiosInstanceAuth.get('/csrf-token');
             axiosInstanceAuth.defaults.headers.post['X-CSRF-Token'] =
+                data.csrfToken;
+            axiosInstanceAuth.defaults.headers.patch['X-CSRF-Token'] =
                 data.csrfToken;
         };
 
