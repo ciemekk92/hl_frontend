@@ -7,6 +7,7 @@ export const handleResponse = (res: AxiosResponse) => {
 
     if (res.statusText !== 'OK') {
         if ([401, 403].indexOf(res.status) !== -1) {
+            console.log(res);
             // auto logout if response returned 401 or 403
             //authService.logout();
 

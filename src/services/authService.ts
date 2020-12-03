@@ -102,7 +102,7 @@ const changePassword = async (passwordData: {
             tokenExpires: responseData.tokenExpires
         });
     } catch (err) {
-        console.log(err);
+        return Promise.reject(err);
     }
 };
 

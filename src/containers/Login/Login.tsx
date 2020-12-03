@@ -12,6 +12,7 @@ import '../../transitions/transitions.css';
 import ModalInput from '../../components/UI/Modal/ModalInput/ModalInput';
 import ModalButton from '../../components/UI/Modal/ModalButton/ModalButton';
 import { authService } from '../../services';
+import { useOutsideClick } from '../../hooks/useOutsideClick';
 
 interface LoginProps {
     clickedCancel: () => void;
@@ -21,15 +22,18 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = (props) => {
     const { clickedCancel, isLogin } = props;
 
-    const [loginData, setLoginData] = useState({
+    const initialLoginData = {
         email: '',
         password: ''
-    });
+    };
 
-    const [signupData, setSignupData] = useState({
+    const initialSignupData = {
         name: '',
         email: ''
-    });
+    };
+
+    const [loginData, setLoginData] = useState(initialLoginData);
+    const [signupData, setSignupData] = useState(initialSignupData);
 
     const [warning, setWarning] = useState({
         shown: false,
@@ -67,13 +71,28 @@ const Login: React.FC<LoginProps> = (props) => {
         login ? setLoginData(updatedData) : setSignupData(updatedData);
     };
 
+    const inputClearHandler = () => {
+        setLoginData(initialLoginData);
+        setSignupData(initialSignupData);
+        setWarning(
+            updateObject(warning, {
+                shown: false
+            })
+        );
+        clickedCancel();
+    };
+
     const loginHandler = async () => {
         await authService
             .login(loginData.email, loginData.password)
             .then(() => {
-                clickedCancel();
+                inputClearHandler();
             });
     };
+
+    const modalRef = useRef(null);
+
+    useOutsideClick(modalRef, () => inputClearHandler());
 
     const login = (
         <>
@@ -165,7 +184,9 @@ const Login: React.FC<LoginProps> = (props) => {
                     >
                         {isLogin ? 'Zaloguj się' : 'Zarejestruj się'}
                     </ModalButton>
-                    <ModalButton clicked={clickedCancel}>Anuluj</ModalButton>
+                    <ModalButton clicked={inputClearHandler}>
+                        Anuluj
+                    </ModalButton>
                 </Row>
             </ModalContainer>
         </Wrapper>

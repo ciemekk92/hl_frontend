@@ -11,6 +11,7 @@ import ModalInput from '../../components/UI/Modal/ModalInput/ModalInput';
 import { updateObject } from '../../shared/utility';
 import ModalButton from '../../components/UI/Modal/ModalButton/ModalButton';
 import { authService } from '../../services';
+import { useOutsideClick } from '../../hooks/useOutsideClick';
 
 interface ChangeProps {
     clickedCancel: () => void;
@@ -19,11 +20,13 @@ interface ChangeProps {
 const ChangePassword: React.FC<ChangeProps> = (props) => {
     const { clickedCancel } = props;
 
-    const [passwordData, setPasswordData] = useState({
+    const initialData = {
         currentPassword: '',
         newPassword: '',
         confirmPassword: ''
-    });
+    };
+
+    const [passwordData, setPasswordData] = useState(initialData);
     const [warning, setWarning] = useState({
         shown: false,
         message: ''
@@ -53,11 +56,57 @@ const ChangePassword: React.FC<ChangeProps> = (props) => {
         setPasswordData(updatedData);
     };
 
+    const inputClearHandler = () => {
+        clickedCancel();
+        setPasswordData(initialData);
+        setWarning(updateObject(warning, { shown: false }));
+    };
+
+    const passwordChangeHandler = () => {
+        authService
+            .changePassword(passwordData)
+            .then(() => {
+                inputClearHandler();
+            })
+            .catch((err) =>
+                err.message.includes(401)
+                    ? setWarning(
+                          updateObject(warning, {
+                              shown: true,
+                              message: 'Obecne hasło jest nieprawidłowe'
+                          })
+                      )
+                    : err.message.includes(500)
+                    ? setWarning(
+                          updateObject(warning, {
+                              shown: true,
+                              message: 'Podane hasła nie są identyczne.'
+                          })
+                      )
+                    : setWarning(
+                          updateObject(warning, {
+                              shown: true,
+                              message:
+                                  'Wystąpił nieoczekiwany błąd. Spróbuj ponownie, jeżeli błąd będzie się powtarzał, skontaktuj się z administratorem serwisu.'
+                          })
+                      )
+            );
+    };
+
     const nodeRef = useRef(null);
+    const modalRef = useRef(null);
+
+    useOutsideClick(modalRef, () => inputClearHandler());
 
     return (
-        <Wrapper>
+        <Wrapper ref={modalRef}>
             <ModalContainer>
+                <Row>
+                    <Text>
+                        Podaj obecne hasło, a następnie podaj nowe i je
+                        potwierdź.
+                    </Text>
+                </Row>
                 <CSSTransition
                     nodeRef={nodeRef}
                     in={warning.shown}
@@ -68,12 +117,6 @@ const ChangePassword: React.FC<ChangeProps> = (props) => {
                 >
                     <Warning ref={nodeRef}>{warning.message}</Warning>
                 </CSSTransition>
-                <Row>
-                    <Text>
-                        Podaj obecne hasło, a następnie podaj nowe i je
-                        potwierdź.
-                    </Text>
-                </Row>
                 <Row>
                     <ModalInput
                         name="currentPassword"
@@ -108,12 +151,12 @@ const ChangePassword: React.FC<ChangeProps> = (props) => {
                     />
                 </Row>
                 <Row>
-                    <ModalButton
-                        clicked={() => authService.changePassword(passwordData)}
-                    >
+                    <ModalButton clicked={() => passwordChangeHandler()}>
                         Zatwierdź
                     </ModalButton>
-                    <ModalButton clicked={clickedCancel}>Anuluj</ModalButton>
+                    <ModalButton clicked={inputClearHandler}>
+                        Anuluj
+                    </ModalButton>
                 </Row>
             </ModalContainer>
         </Wrapper>

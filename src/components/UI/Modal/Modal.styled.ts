@@ -38,8 +38,6 @@ export const Text = styled.p`
 `;
 
 export const Warning = styled.p`
-    position: absolute;
-    top: 7%;
     font-size: 1.6rem;
     height: 2rem;
     color: ${(props) => props.theme.warningMedium};

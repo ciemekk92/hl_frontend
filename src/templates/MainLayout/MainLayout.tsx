@@ -41,10 +41,6 @@ const MainLayout: React.FC = (props) => {
         });
     });
 
-    useOutsideClick(modalRef, () => {
-        setOpenModal(false);
-    });
-
     const openLoginModal = (isLogin: boolean) => {
         setIsModalLogin(isLogin);
         setOpenModal(true);
