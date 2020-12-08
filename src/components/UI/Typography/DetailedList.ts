@@ -17,13 +17,13 @@ export const DetailsItem = styled.li`
 
 export const ToggleDetails = styled.p`
     display: inline;
-    color: ${(props) => props.theme.secondaryMedium};
+    color: ${(props) => props.theme.warningMedium};
     transition: all 0.4s ease;
     cursor: pointer;
     font-weight: 700;
     text-decoration: underline;
 
     &:hover {
-        color: ${(props) => props.theme.secondaryLight};
+        color: ${(props) => props.theme.warningDark};
     }
 `;

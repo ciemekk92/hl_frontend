@@ -62,6 +62,19 @@ const logout = async () => {
     // TODO invalidate refresh token
 };
 
+const signUp = async (name: string, email: string) => {
+    try {
+        await handleResponse(
+            await axiosInstanceAuth.post('/users/signup', {
+                name: name,
+                email: email
+            })
+        );
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 const changePassword = async (passwordData: {
     currentPassword: string;
     newPassword: string;
@@ -133,6 +146,7 @@ async function refresh() {
 export const authService = {
     login,
     logout,
+    signUp,
     refresh,
     changePassword,
     currentUser: currentUserSubject.asObservable(),

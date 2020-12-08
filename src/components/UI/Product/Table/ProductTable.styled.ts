@@ -1,19 +1,20 @@
 import styled from 'styled-components';
 
 export const Table = styled.table`
-    width: 40rem;
-    border: 1px solid black;
+    width: 50rem;
+    border: none;
     border-collapse: collapse;
     margin-left: 5rem;
 `;
 
 export const TRow = styled.tr``;
 export const THeader = styled.th`
-    border: 1px solid black;
+    text-align: left;
+    border: none;
     font-size: 1.6rem;
 `;
 export const TCell = styled.td`
-    border: 1px solid black;
-    text-align: center;
+    border: none;
+    text-align: left;
     font-size: 1.4rem;
 `;

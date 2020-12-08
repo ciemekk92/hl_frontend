@@ -21,6 +21,27 @@ interface ProductViewProps {
 
 const ProductView: React.FC<ProductViewProps> = (props) => {
     const { product } = props;
+    // TODO expandable products in sidebar
+
+    const ingredientsMapHandler = () => {
+        return product.ingredients
+            .sort((a: Ingredient, b: Ingredient) => {
+                if (a.name.toUpperCase() < b.name.toUpperCase()) {
+                    return -1;
+                }
+                if (a.name.toUpperCase() > b.name.toUpperCase()) {
+                    return 1;
+                }
+                return 0;
+            })
+            .map((element: Ingredient) => (
+                <TRow key={element.name}>
+                    <TCell>{element.name}</TCell>
+                    <TCell>{`${element.amount} ${element.unit}`}</TCell>
+                    <TCell>{element.percentage}</TCell>
+                </TRow>
+            ));
+    };
 
     return (
         <Wrapper>
@@ -39,15 +60,7 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
                         <THeader>% RWS</THeader>
                     </TRow>
                 </thead>
-                <tbody>
-                    {product.ingredients.map((element: Ingredient) => (
-                        <TRow key={element.name}>
-                            <TCell>{element.name}</TCell>
-                            <TCell>{`${element.amount} ${element.unit}`}</TCell>
-                            <TCell>{element.percentage}</TCell>
-                        </TRow>
-                    ))}
-                </tbody>
+                <tbody>{ingredientsMapHandler()}</tbody>
             </Table>
             <Heading3>Stosowanie</Heading3>
             <UnorderedList>

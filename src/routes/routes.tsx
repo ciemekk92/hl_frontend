@@ -13,6 +13,7 @@ const Routes: React.FC<PropsFromRedux> = (props) => {
             <Route path={'/'} exact component={Dashboard} />
             {products.length > 0 ? (
                 <Route
+                    exact
                     path={'/products/:slug'}
                     render={(props) => (
                         <ProductView

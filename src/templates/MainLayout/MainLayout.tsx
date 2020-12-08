@@ -61,11 +61,11 @@ const MainLayout: React.FC = (props) => {
                     <>
                         <Header />
                         <Sidebar />
-                        <Switch>
-                            <Main>
-                                <Routes {...props} />
-                            </Main>
-                        </Switch>
+
+                        <Main>
+                            <Routes {...props} />
+                        </Main>
+
                         <Modal open={openModal} ref={modalRef}>
                             <ChangePassword clickedCancel={closeModal} />
                         </Modal>

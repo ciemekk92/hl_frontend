@@ -22,13 +22,13 @@
 }
 
 .sidebar-panel-enter-active {
-    max-height: 20rem;
+    max-height: 100rem;
     opacity: 1;
     transition: all 600ms ease;
 }
 
 .sidebar-panel-exit {
-    max-height: 20rem;
+    max-height: 100rem;
     opacity: 1;
 }
 

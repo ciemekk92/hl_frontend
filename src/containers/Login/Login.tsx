@@ -83,11 +83,25 @@ const Login: React.FC<LoginProps> = (props) => {
     };
 
     const loginHandler = async () => {
-        await authService
-            .login(loginData.email, loginData.password)
-            .then(() => {
-                inputClearHandler();
-            });
+        if (!warning.shown) {
+            await authService
+                .login(loginData.email, loginData.password)
+                .then(() => {
+                    inputClearHandler();
+                })
+                .catch((err) => console.log(err));
+        }
+    };
+
+    const signupHandler = async () => {
+        if (!warning.shown) {
+            await authService
+                .signUp(signupData.name, signupData.email)
+                .then(() => {
+                    inputClearHandler();
+                })
+                .catch((err) => console.log(err));
+        }
     };
 
     const modalRef = useRef(null);
@@ -174,13 +188,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 {isLogin ? login : signup}
                 <Row>
                     <ModalButton
-                        clicked={
-                            isLogin
-                                ? loginHandler
-                                : () => {
-                                      authService.refresh();
-                                  }
-                        }
+                        clicked={isLogin ? loginHandler : signupHandler}
                     >
                         {isLogin ? 'Zaloguj się' : 'Zarejestruj się'}
                     </ModalButton>
