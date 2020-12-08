@@ -7,7 +7,7 @@ import {
 } from '../../../components/UI/Typography';
 import { v4 as uuidv4 } from 'uuid';
 import DetailedList from '../../../components/UI/DetailedList/DetailedList';
-import { Wrapper } from '../../../views/ProductView/ProductView.styled';
+import { Wrapper } from '../Shared.styled';
 
 export const Dosage: React.FC<ProductProps> = (props) => {
     const { product } = props;

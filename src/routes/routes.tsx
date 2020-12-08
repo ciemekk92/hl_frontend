@@ -3,15 +3,15 @@ import { Route } from 'react-router-dom';
 import Dashboard from '../views/Dashboard/Dashboard';
 import { connect, ConnectedProps } from 'react-redux';
 import { Product } from '../store/types/types';
-import ProductView from '../views/ProductView/ProductView';
 import {
     Ingredients,
+    Storage,
     Dosage,
     SideEffects,
     RecommendedFor,
     NotRecommendedFor,
     Questions,
-    CanBeUsedAlongside
+    NeedsApproval
 } from '../containers/Product';
 
 const Routes: React.FC<PropsFromRedux> = (props) => {
@@ -34,6 +34,16 @@ const Routes: React.FC<PropsFromRedux> = (props) => {
                         path={'/products/:slug/ingredients'}
                         render={(props) => (
                             <Ingredients
+                                product={filterProducts(products, props)}
+                                {...props}
+                            />
+                        )}
+                    />
+                    <Route
+                        exact
+                        path={'/products/:slug/storage'}
+                        render={(props) => (
+                            <Storage
                                 product={filterProducts(products, props)}
                                 {...props}
                             />
@@ -71,9 +81,9 @@ const Routes: React.FC<PropsFromRedux> = (props) => {
                     />
                     <Route
                         exact
-                        path={'/products/:slug/notRecommendedFor'}
+                        path={'/products/:slug/needsApproval'}
                         render={(props) => (
-                            <NotRecommendedFor
+                            <NeedsApproval
                                 product={filterProducts(products, props)}
                                 {...props}
                             />
@@ -81,9 +91,9 @@ const Routes: React.FC<PropsFromRedux> = (props) => {
                     />
                     <Route
                         exact
-                        path={'/products/:slug/canBeUsedAlongside'}
+                        path={'/products/:slug/notRecommendedFor'}
                         render={(props) => (
-                            <CanBeUsedAlongside
+                            <NotRecommendedFor
                                 product={filterProducts(products, props)}
                                 {...props}
                             />

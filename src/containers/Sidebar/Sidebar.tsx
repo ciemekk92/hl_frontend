@@ -38,11 +38,12 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
 
     const routes = [
         { label: 'Składniki', route: 'ingredients' },
+        { label: 'Przechowywanie', route: 'storage' },
         { label: 'Stosowanie', route: 'dosage' },
         { label: 'Skutki Uboczne', route: 'sideEffects' },
         { label: 'Dla kogo polecamy?', route: 'recommendedFor' },
+        { label: 'Za zgodą lekarza', route: 'needsApproval' },
         { label: 'Dla kogo nie polecamy?', route: 'notRecommendedFor' },
-        { label: 'Polecane połączenia', route: 'canBeUsedAlongside' },
         { label: 'Trudne pytania', route: 'questions' }
     ];
 

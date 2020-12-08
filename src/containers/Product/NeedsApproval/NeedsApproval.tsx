@@ -6,17 +6,18 @@ import {
     UnorderedList
 } from '../../../components/UI/Typography';
 import DetailedList from '../../../components/UI/DetailedList/DetailedList';
-import { Wrapper } from '../../../views/ProductView/ProductView.styled';
+import { Wrapper } from '../Shared.styled';
 
-export const CanBeUsedAlongside: React.FC<ProductProps> = (props) => {
+export const NeedsApproval: React.FC<ProductProps> = (props) => {
     const { product } = props;
-
     return (
         <Wrapper>
             <Heading2>{product.name}</Heading2>
-            <Heading3>Polecane połączenia</Heading3>
+            <Heading3>
+                Stosowanie możliwe jedynie za wyraźną zgodą i pod opieką lekarza
+            </Heading3>
             <UnorderedList>
-                {product.canBeUsedAlongside.map((element) => (
+                {product.needsApproval.map((element) => (
                     <DetailedList key={element.name} element={element} />
                 ))}
             </UnorderedList>

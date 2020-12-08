@@ -4,5 +4,6 @@ export {
     UnorderedList,
     ListItem,
     DetailsItem,
-    ToggleDetails
+    ToggleDetails,
+    Explanation
 } from './DetailedList';

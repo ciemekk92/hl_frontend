@@ -7,7 +7,7 @@ import {
     TRow
 } from '../../../components/UI/Product/Table/ProductTable.styled';
 import { Heading2, Heading3 } from '../../../components/UI/Typography';
-import { Wrapper } from '../../../views/ProductView/ProductView.styled';
+import { Wrapper } from '../Shared.styled';
 import { ProductProps } from '../../../types';
 
 export const Ingredients: React.FC<ProductProps> = (props) => {

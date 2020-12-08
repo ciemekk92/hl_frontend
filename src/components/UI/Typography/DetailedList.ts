@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const UnorderedList = styled.ul`
-    font-size: 1.4rem;
+    font-size: 1.8rem;
     margin: 0 2rem;
 `;
 
@@ -26,4 +26,9 @@ export const ToggleDetails = styled.p`
     &:hover {
         color: ${(props) => props.theme.warningDark};
     }
+`;
+
+export const Explanation = styled.li`
+    list-style: none;
+    margin: 0 2rem;
 `;

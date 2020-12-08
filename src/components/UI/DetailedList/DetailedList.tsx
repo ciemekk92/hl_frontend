@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { DetailedInfo, ProductQuestion } from '../../../store/types/types';
-import { DetailsItem, ListItem, ToggleDetails } from '../Typography';
+import {
+    DetailsItem,
+    ListItem,
+    ToggleDetails,
+    Explanation
+} from '../Typography';
 import { CSSTransition } from 'react-transition-group';
 import '../../../transitions/transitions.css';
 
@@ -15,8 +20,6 @@ const DetailedList: React.FC<ListProps> = (props) => {
         'question' in element
             ? { name: element.question, details: element.answer }
             : element;
-
-    let newName = typedElement.name.split('\n').map((el) => <p>{el}</p>);
 
     const [showDetails, setShowDetails] = useState(false);
     return (
@@ -38,6 +41,9 @@ const DetailedList: React.FC<ListProps> = (props) => {
             >
                 <DetailsItem>{typedElement.details}</DetailsItem>
             </CSSTransition>
+            {typedElement.explanation && typedElement.explanation.length > 0 ? (
+                <Explanation>{typedElement.explanation}</Explanation>
+            ) : null}
         </React.Fragment>
     );
 };

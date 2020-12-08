@@ -6,7 +6,7 @@ import {
     UnorderedList
 } from '../../../components/UI/Typography';
 import DetailedList from '../../../components/UI/DetailedList/DetailedList';
-import { Wrapper } from '../../../views/ProductView/ProductView.styled';
+import { Wrapper } from '../Shared.styled';
 
 export const NotRecommendedFor: React.FC<ProductProps> = (props) => {
     const { product } = props;

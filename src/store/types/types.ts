@@ -23,6 +23,7 @@ export interface Ingredient {
 export interface DetailedInfo {
     name: string;
     details: string[];
+    explanation?: string;
 }
 
 export interface ProductQuestion {
@@ -34,11 +35,12 @@ export interface Product {
     name: string;
     slug: string;
     ingredients: Ingredient[];
+    storage: DetailedInfo[];
     dosage: DetailedInfo[];
     recommendedFor: DetailedInfo[];
+    needsApproval: DetailedInfo[];
     notRecommendedFor: DetailedInfo[];
     sideEffects: DetailedInfo[];
-    canBeUsedAlongside: DetailedInfo[];
     questions: ProductQuestion[];
 }
 

@@ -11,10 +11,11 @@ export const TRow = styled.tr``;
 export const THeader = styled.th`
     text-align: left;
     border: none;
-    font-size: 1.6rem;
+    font-size: 2rem;
+    padding-bottom: 1.6rem;
 `;
 export const TCell = styled.td`
     border: none;
     text-align: left;
-    font-size: 1.4rem;
+    font-size: 1.8rem;
 `;
