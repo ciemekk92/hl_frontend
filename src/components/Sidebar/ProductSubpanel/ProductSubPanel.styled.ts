@@ -1,10 +1,15 @@
 import styled from 'styled-components';
 
-export const Panel = styled.div`
+interface PanelProps {
+    readonly active: boolean;
+}
+
+export const Panel = styled.div<PanelProps>`
     width: 100%;
     height: 3.2rem;
     transition: all 0.4s ease;
     font-size: 1.2rem;
+    font-weight: ${(props) => (props.active ? 700 : 400)};
     display: flex;
     align-items: center;
     justify-content: start;

@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { StyledLink, Wrapper } from './Sidebar.styled';
 import { connect, ConnectedProps } from 'react-redux';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { CSSTransition } from 'react-transition-group';
 import { v4 as uuidv4 } from 'uuid';
 import '../../transitions/transitions.css';
 import {
@@ -16,9 +16,11 @@ import PanelContainer from '../../components/Sidebar/PanelContainer/PanelContain
 import { dataService } from '../../services';
 import ProductSubPanel from '../../components/Sidebar/ProductSubpanel/ProductSubPanel';
 import SubPanelContainer from '../../components/Sidebar/SubPanelContainer/SubPanelContainer';
+import { updateObject } from '../../shared/utility';
 
 const Sidebar: React.FC<PropsFromRedux> = (props) => {
     const { products, cases, questions, locations } = props;
+    const [activeTab, setActiveTab] = useState({ product: '', tab: '' });
 
     const [activeProduct, setActiveProduct] = useState('');
     const [areProductsShown, setAreProductsShown] = useState(false);
@@ -34,6 +36,25 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
         }
     };
 
+    const routes = [
+        { label: 'Składniki', route: 'ingredients' },
+        { label: 'Stosowanie', route: 'dosage' },
+        { label: 'Skutki Uboczne', route: 'sideEffects' },
+        { label: 'Dla kogo polecamy?', route: 'recommendedFor' },
+        { label: 'Dla kogo nie polecamy?', route: 'notRecommendedFor' },
+        { label: 'Polecane połączenia', route: 'canBeUsedAlongside' },
+        { label: 'Trudne pytania', route: 'questions' }
+    ];
+
+    const selectTabHandler = (productName: string, tab: string) => {
+        setActiveTab(
+            updateObject(activeTab, {
+                product: productName,
+                tab: tab
+            })
+        );
+    };
+
     const productMapHandler = products
         .sort((a: Product, b: Product) => {
             if (a.name.toUpperCase() < b.name.toUpperCase()) {
@@ -46,22 +67,31 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
         })
         .map((element: Product) => (
             <React.Fragment key={uuidv4()}>
-                {/*<StyledLink to={`/products/${element.slug}`}>*/}
                 <ProductPanel
                     active={activeProduct === element.name}
                     clicked={() => productSelectHandler(element)}
                 >
                     {element.name}
                 </ProductPanel>
-                {/*</StyledLink>*/}
                 <SubPanelContainer active={activeProduct === element.name}>
-                    <ProductSubPanel>Składniki</ProductSubPanel>
-                    <ProductSubPanel>Stosowanie</ProductSubPanel>
-                    <ProductSubPanel>Skutki Uboczne</ProductSubPanel>
-                    <ProductSubPanel>Dla kogo polecamy?</ProductSubPanel>
-                    <ProductSubPanel>Dla kogo nie polecamy?</ProductSubPanel>
-                    <ProductSubPanel>Polecane połączenia</ProductSubPanel>
-                    <ProductSubPanel>Trudne pytania</ProductSubPanel>
+                    {routes.map((route) => (
+                        <StyledLink
+                            to={`/products/${element.slug}/${route.route}`}
+                            key={uuidv4()}
+                        >
+                            <ProductSubPanel
+                                active={
+                                    route.label === activeTab.tab &&
+                                    element.name === activeTab.product
+                                }
+                                clicked={() =>
+                                    selectTabHandler(element.name, route.label)
+                                }
+                            >
+                                {route.label}
+                            </ProductSubPanel>
+                        </StyledLink>
+                    ))}
                 </SubPanelContainer>
             </React.Fragment>
         ));

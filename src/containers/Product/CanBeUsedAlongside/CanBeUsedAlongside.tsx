@@ -1,18 +1,14 @@
 import React from 'react';
-import { Product } from '../../store/types/types';
-import { Wrapper } from './ProductView.styled';
+import { ProductProps } from '../../../types';
 import {
     Heading2,
     Heading3,
     UnorderedList
-} from '../../components/UI/Typography';
-import DetailedList from '../../components/UI/DetailedList/DetailedList';
+} from '../../../components/UI/Typography';
+import DetailedList from '../../../components/UI/DetailedList/DetailedList';
+import { Wrapper } from '../../../views/ProductView/ProductView.styled';
 
-interface ProductViewProps {
-    product: Product;
-}
-
-const ProductView: React.FC<ProductViewProps> = (props) => {
+export const CanBeUsedAlongside: React.FC<ProductProps> = (props) => {
     const { product } = props;
 
     return (
@@ -27,5 +23,3 @@ const ProductView: React.FC<ProductViewProps> = (props) => {
         </Wrapper>
     );
 };
-
-export default ProductView;
