@@ -59,16 +59,19 @@ const logout = async () => {
         tokenExpires: ''
     });
     await axiosInstanceAuth.post('/users/logout');
-    // TODO invalidate refresh token
 };
 
 const signUp = async (name: string, email: string) => {
     try {
         await handleResponse(
-            await axiosInstanceAuth.post('/users/signup', {
-                name: name,
-                email: email
-            })
+            await axiosInstanceAuth.post(
+                '/users/signup',
+                {
+                    name: name,
+                    email: email
+                },
+                { headers: { 'Content-Type': 'application/json' } }
+            )
         );
     } catch (err) {
         console.log(err);

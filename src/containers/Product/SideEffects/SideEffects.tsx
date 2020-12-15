@@ -17,7 +17,11 @@ export const SideEffects: React.FC<ProductProps> = (props) => {
             <Heading3>Skutki uboczne</Heading3>
             <UnorderedList>
                 {product.sideEffects.map((element) => (
-                    <DetailedList key={element.name} element={element} />
+                    <DetailedList
+                        sideEffect
+                        key={element.name}
+                        element={element}
+                    />
                 ))}
             </UnorderedList>
         </Wrapper>

@@ -12,7 +12,11 @@ export const ListItem = styled.li`
 export const DetailsItem = styled.li`
     font-style: italic;
     list-style: none;
-    margin: 0 2rem;
+    margin: 1rem 2rem;
+
+    &:last-child {
+        margin-bottom: 2rem;
+    }
 `;
 
 export const ToggleDetails = styled.p`
@@ -22,6 +26,7 @@ export const ToggleDetails = styled.p`
     cursor: pointer;
     font-weight: 700;
     text-decoration: underline;
+    margin-left: 1.2rem;
 
     &:hover {
         color: ${(props) => props.theme.warningDark};

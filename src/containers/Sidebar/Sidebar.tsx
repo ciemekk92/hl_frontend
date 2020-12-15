@@ -66,7 +66,7 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
             }
             return 0;
         })
-        .map((element: Product) => (
+        .map((element: Product, index) => (
             <React.Fragment key={uuidv4()}>
                 <ProductPanel
                     active={activeProduct === element.name}
@@ -75,24 +75,33 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
                     {element.name}
                 </ProductPanel>
                 <SubPanelContainer active={activeProduct === element.name}>
-                    {routes.map((route) => (
-                        <StyledLink
-                            to={`/products/${element.slug}/${route.route}`}
-                            key={uuidv4()}
-                        >
-                            <ProductSubPanel
-                                active={
-                                    route.label === activeTab.tab &&
-                                    element.name === activeTab.product
-                                }
-                                clicked={() =>
-                                    selectTabHandler(element.name, route.label)
-                                }
-                            >
-                                {route.label}
-                            </ProductSubPanel>
-                        </StyledLink>
-                    ))}
+                    {routes.map((route) => {
+                        let currentRoute = products[index];
+                        return currentRoute[`${route.route}` as keyof Product]
+                            .length! > 0 || route.route === 'ingredients' ? (
+                            currentRoute.ingredients.day ? (
+                                <StyledLink
+                                    to={`/products/${element.slug}/${route.route}`}
+                                    key={uuidv4()}
+                                >
+                                    <ProductSubPanel
+                                        active={
+                                            route.label === activeTab.tab &&
+                                            element.name === activeTab.product
+                                        }
+                                        clicked={() =>
+                                            selectTabHandler(
+                                                element.name,
+                                                route.label
+                                            )
+                                        }
+                                    >
+                                        {route.label}
+                                    </ProductSubPanel>
+                                </StyledLink>
+                            ) : null
+                        ) : null;
+                    })}
                 </SubPanelContainer>
             </React.Fragment>
         ));

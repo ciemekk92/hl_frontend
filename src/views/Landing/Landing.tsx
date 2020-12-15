@@ -18,7 +18,7 @@ const Landing: React.FC<LandingProps> = (props) => {
                 size={64}
                 title={''}
                 color={'#000'}
-                style={{ margin: '2rem 0 15rem' }}
+                style={{ margin: '15rem 0' }}
             />
             <LoginButtonsContainer>
                 <LandingLoginButton onClick={() => toggleLogin(true)}>

@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 interface SubPanelProps {
     active: boolean;
-    children: React.ReactElement<any>[];
 }
 
 const SubPanelContainer: React.FC<SubPanelProps> = (props) => {
@@ -24,4 +23,4 @@ const SubPanelContainer: React.FC<SubPanelProps> = (props) => {
     );
 };
 
-export default React.memo(SubPanelContainer);
+export default SubPanelContainer;

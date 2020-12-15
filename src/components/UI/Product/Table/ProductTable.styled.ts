@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
 export const Table = styled.table`
-    width: 50rem;
+    width: 70rem;
     border: none;
     border-collapse: collapse;
     margin-left: 5rem;
+    padding-bottom: 5rem;
 `;
 
 export const TRow = styled.tr``;
@@ -16,6 +17,8 @@ export const THeader = styled.th`
 `;
 export const TCell = styled.td`
     border: none;
+    border-bottom: 1px solid #cccccc;
     text-align: left;
     font-size: 1.8rem;
+    padding: 0.7rem 0;
 `;

@@ -9,23 +9,29 @@ import { store } from '../../store/store';
 const App: React.FC = () => {
     useEffect(() => {
         history.push('/');
-        const getCsrfToken = async () => {
-            const { data } = await axiosInstanceAuth.get('/csrf-token');
-            axiosInstanceAuth.defaults.headers.post['X-CSRF-Token'] =
-                data.csrfToken;
-            axiosInstanceAuth.defaults.headers.patch['X-CSRF-Token'] =
-                data.csrfToken;
-        };
+        // const getCsrfToken = async () => {
+        //     const { data } = await axiosInstanceAuth.get('/csrf-token');
+        //     axiosInstanceAuth.defaults.headers.post['X-XSRF-Token'] =
+        //         data.csrfToken;
+        //     axiosInstanceAuth.defaults.headers.patch['X-XSRF-Token'] =
+        //         data.csrfToken;
+        //
+        //     console.log(
+        //         axiosInstanceAuth.defaults.headers.patch['X-CSRF-Token']
+        //     );
+        // };
 
         if (!cookie.load('firstUse')) {
-            cookie.save('firstUse', 'true', { httpOnly: false });
+            cookie.save('firstUse', 'true', {
+                httpOnly: false,
+                secure: true,
+                domain: '.cc.healthlabs.pl'
+            });
         }
 
-        getCsrfToken().then((res) => {
-            if (cookie.load('firstUse') !== 'true') {
-                authService.refresh();
-            }
-        });
+        if (cookie.load('firstUse') !== 'true') {
+            authService.refresh();
+        }
     });
 
     return <MainLayout />;

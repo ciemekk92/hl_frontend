@@ -6,7 +6,6 @@ import { Main, Wrapper } from './MainLayout.styled';
 import Header from '../../containers/Header/Header';
 import Sidebar from '../../containers/Sidebar/Sidebar';
 import Modal from '../../components/UI/Modal/Modal';
-import { useOutsideClick } from '../../hooks/useOutsideClick';
 import Landing from '../../views/Landing/Landing';
 import Login from '../../containers/Login/Login';
 import { authService } from '../../services';
@@ -81,7 +80,11 @@ const MainLayout: React.FC = (props) => {
                 toggleLogin={(isLogin: boolean) => openLoginModal(isLogin)}
             />
             <Modal open={openModal} ref={modalRef}>
-                <Login clickedCancel={closeModal} isLogin={isModalLogin} />
+                <Login
+                    clickedCancel={closeModal}
+                    isLogin={isModalLogin}
+                    opened={openModal}
+                />
             </Modal>
         </>
     );
@@ -103,4 +106,4 @@ const MainLayout: React.FC = (props) => {
     );
 };
 
-export default MainLayout;
+export default React.memo(MainLayout);

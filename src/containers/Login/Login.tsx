@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import {
     Wrapper,
     ModalContainer,
@@ -17,20 +17,19 @@ import { useOutsideClick } from '../../hooks/useOutsideClick';
 interface LoginProps {
     clickedCancel: () => void;
     isLogin?: boolean;
+    opened: boolean;
 }
 
 const Login: React.FC<LoginProps> = (props) => {
-    const { clickedCancel, isLogin } = props;
+    const { clickedCancel, isLogin, opened } = props;
 
-    const initialLoginData = {
-        email: '',
-        password: ''
-    };
+    const initialLoginData = useMemo(() => {
+        return { email: '', password: '' };
+    }, []);
 
-    const initialSignupData = {
-        name: '',
-        email: ''
-    };
+    const initialSignupData = useMemo(() => {
+        return { name: '', email: '' };
+    }, []);
 
     const [loginData, setLoginData] = useState(initialLoginData);
     const [signupData, setSignupData] = useState(initialSignupData);
@@ -39,6 +38,18 @@ const Login: React.FC<LoginProps> = (props) => {
         shown: false,
         message: ''
     });
+    const [success, setSuccess] = useState({
+        shown: false,
+        message: ''
+    });
+
+    useEffect(() => {
+        if (isLogin && opened) {
+            setLoginData(initialLoginData);
+        } else if (!isLogin && opened) {
+            setSignupData(initialSignupData);
+        }
+    }, [initialLoginData, initialSignupData, isLogin, opened]);
 
     const validateEmail = (email: string) => {
         const pattern = /\S+@\S+\.\S+/;
@@ -71,23 +82,13 @@ const Login: React.FC<LoginProps> = (props) => {
         login ? setLoginData(updatedData) : setSignupData(updatedData);
     };
 
-    const inputClearHandler = () => {
-        setLoginData(initialLoginData);
-        setSignupData(initialSignupData);
-        setWarning(
-            updateObject(warning, {
-                shown: false
-            })
-        );
-        clickedCancel();
-    };
-
     const loginHandler = async () => {
         if (!warning.shown) {
             await authService
                 .login(loginData.email, loginData.password)
-                .then(() => {
-                    inputClearHandler();
+                .then((response) => {
+                    console.log(response);
+                    clickedCancel();
                 })
                 .catch((err) => console.log(err));
         }
@@ -98,15 +99,24 @@ const Login: React.FC<LoginProps> = (props) => {
             await authService
                 .signUp(signupData.name, signupData.email)
                 .then(() => {
-                    inputClearHandler();
+                    clickedCancel();
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => {
+                    setWarning(
+                        updateObject(warning, {
+                            shown: true,
+                            message:
+                                'Wystąpił błąd przy rejestracji. Spróbuj ponownie, a jeżeli błąd się powtarza skontaktuj się z administratorem.'
+                        })
+                    );
+                    console.log(err);
+                });
         }
     };
 
     const modalRef = useRef(null);
 
-    useOutsideClick(modalRef, () => inputClearHandler());
+    useOutsideClick(modalRef, () => clickedCancel());
 
     const login = (
         <>
@@ -192,13 +202,11 @@ const Login: React.FC<LoginProps> = (props) => {
                     >
                         {isLogin ? 'Zaloguj się' : 'Zarejestruj się'}
                     </ModalButton>
-                    <ModalButton clicked={inputClearHandler}>
-                        Anuluj
-                    </ModalButton>
+                    <ModalButton clicked={clickedCancel}>Anuluj</ModalButton>
                 </Row>
             </ModalContainer>
         </Wrapper>
     );
 };
 
-export default Login;
+export default React.memo(Login);

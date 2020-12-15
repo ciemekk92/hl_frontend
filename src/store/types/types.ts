@@ -1,5 +1,6 @@
 // State types
 // Auth
+
 export interface UserInfo {
     name: string;
     email: string;
@@ -13,6 +14,20 @@ export interface UserState {
 }
 // Data
 
+export interface IngredientsInterface {
+    day: {
+        name: string;
+        dose?: string;
+        ingredients: Ingredient[];
+    };
+    night: {
+        name: string;
+        dose?: string;
+        ingredients: Ingredient[];
+    };
+    length?: never;
+}
+
 export interface Ingredient {
     name: string;
     amount: number;
@@ -23,7 +38,7 @@ export interface Ingredient {
 export interface DetailedInfo {
     name: string;
     details: string[];
-    explanation?: string;
+    explanation?: string[];
 }
 
 export interface ProductQuestion {
@@ -34,7 +49,7 @@ export interface ProductQuestion {
 export interface Product {
     name: string;
     slug: string;
-    ingredients: Ingredient[];
+    ingredients: IngredientsInterface;
     storage: DetailedInfo[];
     dosage: DetailedInfo[];
     recommendedFor: DetailedInfo[];
