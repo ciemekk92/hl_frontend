@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input } from './LoginInput.styled';
+import { Input } from './ModalInput.styled';
 import { capitalizeFirstLetter } from '../../../../shared/utility';
 
 interface InputProps {
@@ -10,7 +10,7 @@ interface InputProps {
     placeholder: string;
 }
 
-const LoginInput: React.FC<InputProps> = (props) => {
+const ModalInput: React.FC<InputProps> = (props) => {
     const { name, type, changed, value, placeholder } = props;
 
     return (
@@ -25,4 +25,4 @@ const LoginInput: React.FC<InputProps> = (props) => {
     );
 };
 
-export default LoginInput;
+export default ModalInput;

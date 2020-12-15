@@ -1,6 +1,6 @@
 import { store } from '../store/store';
-import axiosInstance from '../helpers/axiosInstance/axiosInstance';
-import { handleResponse } from '../helpers/handleResponse';
+import axiosInstanceAuth from '../helpers/axiosInstances/axiosInstanceAuth';
+import { handleResponse } from '../helpers';
 import { setLoginInfo, setLogout } from '../store/actions/actions';
 import { BehaviorSubject } from 'rxjs';
 
@@ -19,7 +19,7 @@ const login = async (email: string, password: string) => {
             token: string;
             tokenExpires: number;
         } = await handleResponse(
-            await axiosInstance.post(
+            await axiosInstanceAuth.post(
                 '/users/login',
                 { email: email, password: password },
                 { headers: { 'Content-Type': 'application/json' } }
@@ -49,7 +49,7 @@ const login = async (email: string, password: string) => {
     }
 };
 
-const logout = () => {
+const logout = async () => {
     store.dispatch(setLogout());
     currentUserSubject.next({
         name: '',
@@ -58,12 +58,73 @@ const logout = () => {
         token: '',
         tokenExpires: ''
     });
-    // TODO invalidate refresh token
+    await axiosInstanceAuth.post('/users/logout');
+};
+
+const signUp = async (name: string, email: string) => {
+    try {
+        await handleResponse(
+            await axiosInstanceAuth.post(
+                '/users/signup',
+                {
+                    name: name,
+                    email: email
+                },
+                { headers: { 'Content-Type': 'application/json' } }
+            )
+        );
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+const changePassword = async (passwordData: {
+    currentPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+}) => {
+    try {
+        const responseData: {
+            userInfo: any;
+            token: string;
+            tokenExpires: number;
+        } = await handleResponse(
+            await axiosInstanceAuth.patch(
+                '/users/updatePassword',
+                {
+                    passwordCurrent: passwordData.currentPassword,
+                    password: passwordData.newPassword,
+                    passwordConfirm: passwordData.confirmPassword
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${currentUserSubject.value.token}`
+                    }
+                }
+            )
+        );
+
+        await store.dispatch(
+            setLoginInfo(
+                responseData.userInfo,
+                responseData.token,
+                responseData.tokenExpires
+            )
+        );
+
+        await currentUserSubject.next({
+            ...currentUserSubject.value,
+            token: responseData.token,
+            tokenExpires: responseData.tokenExpires
+        });
+    } catch (err) {
+        return Promise.reject(err);
+    }
 };
 
 async function refresh() {
     try {
-        const axiosResponse = await axiosInstance.post('/users/refresh');
+        const axiosResponse = await axiosInstanceAuth.post('/users/refresh');
         const res = await handleResponse(axiosResponse);
 
         await currentUserSubject.next({
@@ -80,7 +141,6 @@ async function refresh() {
         setTimeout(() => {
             refresh();
         }, res!.tokenExpires * 0.95);
-        console.log(3, currentUserSubject.value);
     } catch (err) {
         console.log(err);
     }
@@ -89,7 +149,9 @@ async function refresh() {
 export const authService = {
     login,
     logout,
+    signUp,
     refresh,
+    changePassword,
     currentUser: currentUserSubject.asObservable(),
     get currentUserValue() {
         return currentUserSubject.value;

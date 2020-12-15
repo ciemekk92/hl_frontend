@@ -1,34 +1,55 @@
-import React, { useState, useRef } from 'react';
-import { Wrapper, LoginContainer, Row, Text, Warning } from './Login.styled';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import {
+    Wrapper,
+    ModalContainer,
+    Row,
+    Text,
+    Warning
+} from '../../components/UI/Modal/Modal.styled';
 import { CSSTransition } from 'react-transition-group';
 import { updateObject } from '../../shared/utility';
 import '../../transitions/transitions.css';
-import LoginInput from '../../components/UI/Login/LoginInput/LoginInput';
-import LoginButton from '../../components/UI/Login/LoginButton/LoginButton';
-import { authService } from '../../services/authService';
+import ModalInput from '../../components/UI/Modal/ModalInput/ModalInput';
+import ModalButton from '../../components/UI/Modal/ModalButton/ModalButton';
+import { authService } from '../../services';
+import { useOutsideClick } from '../../hooks/useOutsideClick';
 
 interface LoginProps {
     clickedCancel: () => void;
     isLogin?: boolean;
+    opened: boolean;
 }
 
 const Login: React.FC<LoginProps> = (props) => {
-    const { clickedCancel, isLogin } = props;
+    const { clickedCancel, isLogin, opened } = props;
 
-    const [loginData, setLoginData] = useState({
-        email: '',
-        password: ''
-    });
+    const initialLoginData = useMemo(() => {
+        return { email: '', password: '' };
+    }, []);
 
-    const [signupData, setSignupData] = useState({
-        name: '',
-        email: ''
-    });
+    const initialSignupData = useMemo(() => {
+        return { name: '', email: '' };
+    }, []);
+
+    const [loginData, setLoginData] = useState(initialLoginData);
+    const [signupData, setSignupData] = useState(initialSignupData);
 
     const [warning, setWarning] = useState({
         shown: false,
         message: ''
     });
+    const [success, setSuccess] = useState({
+        shown: false,
+        message: ''
+    });
+
+    useEffect(() => {
+        if (isLogin && opened) {
+            setLoginData(initialLoginData);
+        } else if (!isLogin && opened) {
+            setSignupData(initialSignupData);
+        }
+    }, [initialLoginData, initialSignupData, isLogin, opened]);
 
     const validateEmail = (email: string) => {
         const pattern = /\S+@\S+\.\S+/;
@@ -62,12 +83,40 @@ const Login: React.FC<LoginProps> = (props) => {
     };
 
     const loginHandler = async () => {
-        await authService
-            .login(loginData.email, loginData.password)
-            .then(() => {
-                clickedCancel();
-            });
+        if (!warning.shown) {
+            await authService
+                .login(loginData.email, loginData.password)
+                .then((response) => {
+                    console.log(response);
+                    clickedCancel();
+                })
+                .catch((err) => console.log(err));
+        }
     };
+
+    const signupHandler = async () => {
+        if (!warning.shown) {
+            await authService
+                .signUp(signupData.name, signupData.email)
+                .then(() => {
+                    clickedCancel();
+                })
+                .catch((err) => {
+                    setWarning(
+                        updateObject(warning, {
+                            shown: true,
+                            message:
+                                'Wystąpił błąd przy rejestracji. Spróbuj ponownie, a jeżeli błąd się powtarza skontaktuj się z administratorem.'
+                        })
+                    );
+                    console.log(err);
+                });
+        }
+    };
+
+    const modalRef = useRef(null);
+
+    useOutsideClick(modalRef, () => clickedCancel());
 
     const login = (
         <>
@@ -75,7 +124,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 <Text>Zaloguj się, aby uzyskać dostęp do aplikacji.</Text>
             </Row>
             <Row>
-                <LoginInput
+                <ModalInput
                     name="email"
                     type="email"
                     placeholder="Adres e-mail"
@@ -86,7 +135,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 />
             </Row>
             <Row>
-                <LoginInput
+                <ModalInput
                     name="password"
                     type="password"
                     changed={(event: React.ChangeEvent) =>
@@ -105,7 +154,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 <Text>Utwórz konto podając odpowiednie dane poniżej.</Text>
             </Row>
             <Row>
-                <LoginInput
+                <ModalInput
                     name="name"
                     type="text"
                     changed={(event: React.ChangeEvent) =>
@@ -116,7 +165,7 @@ const Login: React.FC<LoginProps> = (props) => {
                 />
             </Row>
             <Row>
-                <LoginInput
+                <ModalInput
                     name="email"
                     type="email"
                     changed={(event: React.ChangeEvent) =>
@@ -131,9 +180,11 @@ const Login: React.FC<LoginProps> = (props) => {
 
     const nodeRef = useRef(null);
 
+    // TODO Signup
+
     return (
         <Wrapper>
-            <LoginContainer>
+            <ModalContainer>
                 <CSSTransition
                     nodeRef={nodeRef}
                     in={warning.shown}
@@ -146,22 +197,16 @@ const Login: React.FC<LoginProps> = (props) => {
                 </CSSTransition>
                 {isLogin ? login : signup}
                 <Row>
-                    <LoginButton
-                        clicked={
-                            isLogin
-                                ? loginHandler
-                                : () => {
-                                      authService.refresh();
-                                  }
-                        }
+                    <ModalButton
+                        clicked={isLogin ? loginHandler : signupHandler}
                     >
                         {isLogin ? 'Zaloguj się' : 'Zarejestruj się'}
-                    </LoginButton>
-                    <LoginButton clicked={clickedCancel}>Anuluj</LoginButton>
+                    </ModalButton>
+                    <ModalButton clicked={clickedCancel}>Anuluj</ModalButton>
                 </Row>
-            </LoginContainer>
+            </ModalContainer>
         </Wrapper>
     );
 };
 
-export default Login;
+export default React.memo(Login);
