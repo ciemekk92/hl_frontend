@@ -9,10 +9,13 @@ import {
 import { CSSTransition } from 'react-transition-group';
 import '../../../transitions/transitions.css';
 import { v4 as uuidv4 } from 'uuid';
+import IconChevronRight from '../Icons/IconChevronRight';
+import { IconContainer } from './DetailedList.styled';
 
 interface ListProps {
     element: DetailedInfo | ProductQuestion;
     sideEffect?: boolean;
+    index?: number;
 }
 
 const DetailedList: React.FC<ListProps> = (props) => {
@@ -29,9 +32,16 @@ const DetailedList: React.FC<ListProps> = (props) => {
             <ListItem>
                 {typedElement.name}
                 {typedElement.details.length > 0 ? (
-                    <ToggleDetails onClick={() => setShowDetails(!showDetails)}>
-                        {sideEffect ? 'Co robić?' : 'Dlaczego?'}
-                    </ToggleDetails>
+                    <IconContainer
+                        toggle={showDetails}
+                        onClick={() => setShowDetails(!showDetails)}
+                    >
+                        <IconChevronRight
+                            size={18}
+                            title={'Dowiedz się więcej'}
+                            color={'#f8bd0d'}
+                        />
+                    </IconContainer>
                 ) : null}
             </ListItem>
             {typedElement.details.length === 1 ? (

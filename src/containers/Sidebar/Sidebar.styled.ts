@@ -20,4 +20,5 @@ export const Wrapper = styled.div`
 
 export const StyledLink = styled(Link)`
     text-decoration: none;
+    width: 100%;
 `;

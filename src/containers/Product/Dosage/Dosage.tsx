@@ -21,7 +21,11 @@ export const Dosage: React.FC<ProductProps> = (props) => {
                     index === 0 && element.details.length === 0 ? (
                         <p key={uuidv4()}>{element.name}</p>
                     ) : (
-                        <DetailedList key={element.name} element={element} />
+                        <DetailedList
+                            key={element.name}
+                            index={index}
+                            element={element}
+                        />
                     )
                 )}
             </UnorderedList>

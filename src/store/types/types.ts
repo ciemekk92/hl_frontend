@@ -70,6 +70,7 @@ export interface Case {
 }
 
 export interface BranchLocation {
+    name: string;
     city: string;
     address: string;
 }

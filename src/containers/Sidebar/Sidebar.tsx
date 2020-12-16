@@ -36,7 +36,7 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
         }
     };
 
-    const routes = [
+    const productRoutes = [
         { label: 'Składniki', route: 'ingredients' },
         { label: 'Przechowywanie', route: 'storage' },
         { label: 'Stosowanie', route: 'dosage' },
@@ -75,7 +75,7 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
                     {element.name}
                 </ProductPanel>
                 <SubPanelContainer active={activeProduct === element.name}>
-                    {routes.map((route) => {
+                    {productRoutes.map((route) => {
                         let currentRoute = products[index];
                         return currentRoute[`${route.route}` as keyof Product]
                             .length! > 0 || route.route === 'ingredients' ? (
@@ -83,6 +83,7 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
                                 <StyledLink
                                     to={`/products/${element.slug}/${route.route}`}
                                     key={uuidv4()}
+                                    replace
                                 >
                                     <ProductSubPanel
                                         active={
@@ -165,9 +166,11 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
             <SidebarCategoryPanel clicked={questionsLoadHandler}>
                 Trudne pytania
             </SidebarCategoryPanel>
-            <SidebarCategoryPanel clicked={locationsLoadHandler}>
-                Gdzie nas znaleźć
-            </SidebarCategoryPanel>
+            <StyledLink to={`/locations`} replace>
+                <SidebarCategoryPanel clicked={locationsLoadHandler}>
+                    Gdzie nas znaleźć
+                </SidebarCategoryPanel>
+            </StyledLink>
         </Wrapper>
     );
 };

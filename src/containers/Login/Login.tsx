@@ -86,8 +86,7 @@ const Login: React.FC<LoginProps> = (props) => {
         if (!warning.shown) {
             await authService
                 .login(loginData.email, loginData.password)
-                .then((response) => {
-                    console.log(response);
+                .then(() => {
                     clickedCancel();
                 })
                 .catch((err) => console.log(err));
@@ -116,7 +115,11 @@ const Login: React.FC<LoginProps> = (props) => {
 
     const modalRef = useRef(null);
 
-    useOutsideClick(modalRef, () => clickedCancel());
+    useOutsideClick(modalRef, () => {
+        if (opened) {
+            clickedCancel();
+        }
+    });
 
     const login = (
         <>
@@ -183,7 +186,7 @@ const Login: React.FC<LoginProps> = (props) => {
     // TODO Signup
 
     return (
-        <Wrapper>
+        <Wrapper ref={modalRef}>
             <ModalContainer>
                 <CSSTransition
                     nodeRef={nodeRef}

@@ -15,10 +15,11 @@ import { useOutsideClick } from '../../hooks/useOutsideClick';
 
 interface ChangeProps {
     clickedCancel: () => void;
+    openModal: boolean;
 }
 
 const ChangePassword: React.FC<ChangeProps> = (props) => {
-    const { clickedCancel } = props;
+    const { clickedCancel, openModal } = props;
 
     const initialData = {
         currentPassword: '',
@@ -96,7 +97,11 @@ const ChangePassword: React.FC<ChangeProps> = (props) => {
     const nodeRef = useRef(null);
     const modalRef = useRef(null);
 
-    useOutsideClick(modalRef, () => inputClearHandler());
+    useOutsideClick(modalRef, () => {
+        if (openModal) {
+            inputClearHandler();
+        }
+    });
 
     return (
         <Wrapper ref={modalRef}>
