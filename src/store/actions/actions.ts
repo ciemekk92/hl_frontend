@@ -2,9 +2,11 @@ import {
     BranchLocation,
     Case,
     DataActionTypes,
+    Links,
     Product,
     Question,
     SET_CASES_INFO,
+    SET_LINKS_INFO,
     SET_LOCATIONS_INFO,
     SET_LOGIN_INFO,
     SET_LOGOUT,
@@ -80,5 +82,12 @@ export function setLocationsInfo(
     return {
         type: SET_LOCATIONS_INFO,
         locations: locationsInfo
+    };
+}
+
+export function setLinksInfo(linksInfo: Links[]): DataActionTypes {
+    return {
+        type: SET_LINKS_INFO,
+        links: linksInfo
     };
 }

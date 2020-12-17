@@ -80,11 +80,22 @@ export interface Question {
     answer: string;
 }
 
+export interface Link {
+    name: string;
+    canUse: number;
+}
+
+export interface Links {
+    productName: string;
+    links: Link[];
+}
+
 export interface DataState {
     products: Product[];
     cases: Case[];
     locations: BranchLocation[];
     questions: Question[];
+    links: Links[];
 }
 
 // Action types
@@ -127,6 +138,7 @@ export const SET_PRODUCT_INFO = 'SET_PRODUCT_INFO';
 export const SET_CASES_INFO = 'SET_CASES_INFO';
 export const SET_LOCATIONS_INFO = 'SET_LOCATIONS_INFO';
 export const SET_QUESTIONS_INFO = 'SET_QUESTIONS_INFO';
+export const SET_LINKS_INFO = 'SET_LINKS_INFO';
 
 export interface SetProductInfoAction {
     type: typeof SET_PRODUCT_INFO;
@@ -148,8 +160,14 @@ export interface SetQuestionsInfoAction {
     questions: Question[];
 }
 
+export interface SetLinksInfoAction {
+    type: typeof SET_LINKS_INFO;
+    links: Links[];
+}
+
 export type DataActionTypes =
     | SetProductInfoAction
     | SetCasesInfoAction
     | SetLocationsInfoAction
-    | SetQuestionsInfoAction;
+    | SetQuestionsInfoAction
+    | SetLinksInfoAction;

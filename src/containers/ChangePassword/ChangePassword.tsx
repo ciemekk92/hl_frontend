@@ -168,4 +168,4 @@ const ChangePassword: React.FC<ChangeProps> = (props) => {
     );
 };
 
-export default ChangePassword;
+export default React.memo(ChangePassword);

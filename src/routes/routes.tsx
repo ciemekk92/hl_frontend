@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import Dashboard from '../views/Dashboard/Dashboard';
 import { connect, ConnectedProps } from 'react-redux';
-import { BranchLocation, Product } from '../store/types/types';
+import { BranchLocation, Links, Product } from '../store/types/types';
 import {
     Ingredients,
     Storage,
@@ -14,9 +14,10 @@ import {
     NeedsApproval
 } from '../containers/Product';
 import LocationsView from '../views/LocationsView/LocationsView';
+import ProductLinkingView from '../views/ProductLinkingView/ProductLinkingView';
 
 const Routes: React.FC<PropsFromRedux> = (props) => {
-    const { products, locations } = props;
+    const { products, locations, links } = props;
 
     const filterProducts = (productArray: Product[], renderProps: any) => {
         const filtered = productArray.filter(
@@ -119,6 +120,13 @@ const Routes: React.FC<PropsFromRedux> = (props) => {
                     render={(props) => <LocationsView />}
                 />
             ) : null}
+            {links.length > 0 ? (
+                <Route
+                    exact
+                    path={'/links'}
+                    render={(props) => <ProductLinkingView />}
+                />
+            ) : null}
         </>
     );
 };
@@ -127,11 +135,13 @@ const mapStateToProps = (state: {
     data: {
         products: Product[];
         locations: BranchLocation[];
+        links: Links[];
     };
 }) => {
     return {
         products: state.data.products,
-        locations: state.data.locations
+        locations: state.data.locations,
+        links: state.data.links
     };
 };
 

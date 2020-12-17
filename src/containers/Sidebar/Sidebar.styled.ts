@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Wrapper = styled.div`
-    width: 20rem; // TODO: temporary
+    width: 24rem; // TODO: temporary
     min-height: 90vh;
     height: max-content;
     grid-row: 2 / 3;

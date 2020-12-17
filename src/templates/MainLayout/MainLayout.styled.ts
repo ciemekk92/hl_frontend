@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
     height: max-content;
     display: grid;
     grid-template-rows: 10vh max-content;
-    grid-template-columns: 20rem 1fr;
+    grid-template-columns: 24rem 1fr;
     grid-gap: 0;
 `;
 

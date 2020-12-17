@@ -13,6 +13,9 @@ export const IconContainer = styled.div<ContainerProps>`
     align-items: center;
     justify-content: center;
     transition: all 0.4s ease;
-    ${(props) => (props.toggle ? 'transform: rotate(90deg);' : null)};
+    ${(props) =>
+        props.toggle
+            ? 'transform: translateY(0.2rem) rotate(90deg);'
+            : 'transform: translateY(0.2rem)'};
     cursor: pointer;
 `;

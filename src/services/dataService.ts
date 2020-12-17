@@ -2,6 +2,7 @@ import { store } from '../store/store';
 import axiosInstanceData from '../helpers/axiosInstances/axiosInstanceData';
 import {
     setCasesInfo,
+    setLinksInfo,
     setLocationsInfo,
     setProductInfo,
     setQuestionsInfo
@@ -44,9 +45,20 @@ const getAllLocations = async () => {
 
     await store.dispatch(setLocationsInfo(response.data.data.data));
 };
+
+const getAllLinks = async () => {
+    const state = store.getState();
+    const response = await axiosInstanceData.get('/links', {
+        headers: { Authorization: `Bearer ${state.user.token}` }
+    });
+
+    await store.dispatch(setLinksInfo(response.data.data.data));
+};
+
 export const dataService = {
     getAllProducts,
     getAllCases,
     getAllQuestions,
-    getAllLocations
+    getAllLocations,
+    getAllLinks
 };

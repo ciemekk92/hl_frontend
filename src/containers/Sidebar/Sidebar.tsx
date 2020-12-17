@@ -7,6 +7,7 @@ import '../../transitions/transitions.css';
 import {
     BranchLocation,
     Case,
+    Links,
     Product,
     Question
 } from '../../store/types/types';
@@ -19,7 +20,7 @@ import SubPanelContainer from '../../components/Sidebar/SubPanelContainer/SubPan
 import { updateObject } from '../../shared/utility';
 
 const Sidebar: React.FC<PropsFromRedux> = (props) => {
-    const { products, cases, questions, locations } = props;
+    const { products, cases, questions, locations, links } = props;
     const [activeTab, setActiveTab] = useState({ product: '', tab: '' });
 
     const [activeProduct, setActiveProduct] = useState('');
@@ -147,6 +148,12 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
         }
     };
 
+    const linksLoadHandler = async () => {
+        if (links.length === 0) {
+            await dataService.getAllLinks();
+        }
+    };
+
     return (
         <Wrapper>
             <SidebarCategoryPanel clicked={productLoadHandler}>
@@ -171,6 +178,11 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
                     Gdzie nas znaleźć
                 </SidebarCategoryPanel>
             </StyledLink>
+            <StyledLink to={`/links`} replace>
+                <SidebarCategoryPanel clicked={linksLoadHandler}>
+                    Polecane połączenia
+                </SidebarCategoryPanel>
+            </StyledLink>
         </Wrapper>
     );
 };
@@ -181,13 +193,15 @@ const mapStateToProps = (state: {
         cases: Case[];
         questions: Question[];
         locations: BranchLocation[];
+        links: Links[];
     };
 }) => {
     return {
         products: state.data.products,
         cases: state.data.cases,
         questions: state.data.questions,
-        locations: state.data.locations
+        locations: state.data.locations,
+        links: state.data.links
     };
 };
 
