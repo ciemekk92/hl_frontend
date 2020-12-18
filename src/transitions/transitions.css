@@ -1,17 +1,21 @@
 .max-height-small-enter {
     max-height: 0;
+    opacity: 0;
 }
 
 .max-height-small-enter-active {
-    max-height: 5rem;
+    opacity: 1;
+    max-height: 10rem;
     transition: all 600ms ease;
 }
 
 .max-height-small-exit {
-    max-height: 20rem;
+    opacity: 1;
+    max-height: 10rem;
 }
 
 .max-height-small-exit-active {
+    opacity: 0;
     max-height: 0;
     transition: all 600ms ease;
 }

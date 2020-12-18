@@ -69,10 +69,14 @@ export interface Case {
     products: CaseProduct[];
 }
 
+interface SingleLocation {
+    name: string;
+    address: string;
+}
+
 export interface BranchLocation {
     name: string;
-    city: string;
-    address: string;
+    locations: SingleLocation[];
 }
 
 export interface Question {

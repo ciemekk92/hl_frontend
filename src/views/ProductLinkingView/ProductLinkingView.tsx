@@ -1,7 +1,7 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { connect, ConnectedProps } from 'react-redux';
-import { Links } from '../../store/types/types';
+import { Link, Links } from '../../store/types/types';
 import {
     Legend,
     LegendItem,
@@ -44,7 +44,7 @@ const ProductLinkingView: React.FC<PropsFromRedux> = (props) => {
                 <thead>
                     <LinksTRow>
                         <LinksTHeader> </LinksTHeader>
-                        {links.map((element) => (
+                        {links.map((element: Links) => (
                             <LinksTHeader key={element.productName}>
                                 {element.productName.length > 15
                                     ? `${element.productName.substr(0, 15)}...`
@@ -62,7 +62,7 @@ const ProductLinkingView: React.FC<PropsFromRedux> = (props) => {
                                     ? `${element.productName.substr(0, 15)}...`
                                     : element.productName}
                             </LinksTCell>
-                            {element.links.map((innerElement) => (
+                            {element.links.map((innerElement: Link) => (
                                 <LinksTCell
                                     fillColor={innerElement.canUse}
                                     key={uuidv4()}
