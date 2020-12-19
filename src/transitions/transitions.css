@@ -20,6 +20,28 @@
     transition: all 600ms ease;
 }
 
+.max-height-medium-enter {
+    max-height: 0;
+    opacity: 0;
+}
+
+.max-height-medium-enter-active {
+    opacity: 1;
+    max-height: 36rem;
+    transition: all 600ms ease;
+}
+
+.max-height-medium-exit {
+    opacity: 1;
+    max-height: 36rem;
+}
+
+.max-height-medium-exit-active {
+    opacity: 0;
+    max-height: 0;
+    transition: all 600ms ease;
+}
+
 .sidebar-panel-enter {
     max-height: 0;
     opacity: 0

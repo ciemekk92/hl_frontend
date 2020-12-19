@@ -81,7 +81,7 @@ export interface BranchLocation {
 
 export interface Question {
     question: string;
-    answer: string;
+    answers: string[];
 }
 
 export interface Link {

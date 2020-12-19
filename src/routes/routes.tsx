@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import Dashboard from '../views/Dashboard/Dashboard';
 import { connect, ConnectedProps } from 'react-redux';
-import { BranchLocation, Links, Product } from '../store/types/types';
+import { BranchLocation, Links, Product, Question } from '../store/types/types';
 import {
     Ingredients,
     Storage,
@@ -15,9 +15,10 @@ import {
 } from '../containers/Product';
 import LocationsView from '../views/LocationsView/LocationsView';
 import ProductLinkingView from '../views/ProductLinkingView/ProductLinkingView';
+import QuestionsView from '../views/QuestionsView/QuestionsView';
 
 const Routes: React.FC<PropsFromRedux> = (props) => {
-    const { products, locations, links } = props;
+    const { products, locations, links, questions } = props;
 
     const filterProducts = (productArray: Product[], renderProps: any) => {
         const filtered = productArray.filter(
@@ -127,6 +128,13 @@ const Routes: React.FC<PropsFromRedux> = (props) => {
                     render={(props) => <ProductLinkingView />}
                 />
             ) : null}
+            {questions.length > 0 ? (
+                <Route
+                    exact
+                    path={'/questions'}
+                    render={(props) => <QuestionsView />}
+                />
+            ) : null}
         </>
     );
 };
@@ -136,12 +144,14 @@ const mapStateToProps = (state: {
         products: Product[];
         locations: BranchLocation[];
         links: Links[];
+        questions: Question[];
     };
 }) => {
     return {
         products: state.data.products,
         locations: state.data.locations,
-        links: state.data.links
+        links: state.data.links,
+        questions: state.data.questions
     };
 };
 

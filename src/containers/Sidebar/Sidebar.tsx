@@ -170,9 +170,11 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
             <SidebarCategoryPanel clicked={casesLoadHandler}>
                 Choroby
             </SidebarCategoryPanel>
-            <SidebarCategoryPanel clicked={questionsLoadHandler}>
-                Trudne pytania
-            </SidebarCategoryPanel>
+            <StyledLink to={'/questions'} replace>
+                <SidebarCategoryPanel clicked={questionsLoadHandler}>
+                    Pytania i odpowiedzi
+                </SidebarCategoryPanel>
+            </StyledLink>
             <StyledLink to={`/locations`} replace>
                 <SidebarCategoryPanel clicked={locationsLoadHandler}>
                     Gdzie nas znaleźć
