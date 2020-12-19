@@ -17,7 +17,7 @@ import { modalContext } from '../../context/modalContext';
 
 const { Provider } = modalContext;
 
-const MainLayout: React.FC = (props) => {
+const MainLayout: React.FC = () => {
     // TODO:  signing up, role splitting
     const modalRef: React.Ref<HTMLDivElement> = useRef(null);
 

@@ -2,8 +2,7 @@ import React from 'react';
 import { ProductProps } from '../../../types';
 import {
     Heading2,
-    Heading3,
-    UnorderedList
+    Heading3
 } from '../../../components/UI/Typography';
 import DetailedList from '../../../components/UI/DetailedList/DetailedList';
 import { Wrapper } from '../Shared.styled';

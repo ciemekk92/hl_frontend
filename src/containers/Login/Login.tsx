@@ -4,7 +4,8 @@ import {
     ModalContainer,
     Row,
     Text,
-    Warning
+    Warning,
+    Success
 } from '../../components/UI/Modal/Modal.styled';
 import { CSSTransition } from 'react-transition-group';
 import { updateObject } from '../../shared/utility';
@@ -71,6 +72,12 @@ const Login: React.FC<LoginProps> = (props) => {
                             message: 'Podaj prawidłowy adres email.'
                         })
                     );
+                    setSuccess(
+                        updateObject(success, {
+                            shown: false,
+                            message: ''
+                        })
+                    );
                 }
             } else {
                 setWarning(
@@ -97,8 +104,22 @@ const Login: React.FC<LoginProps> = (props) => {
         if (!warning.shown) {
             await authService
                 .signUp(signupData.name, signupData.email)
-                .then(() => {
-                    clickedCancel();
+                .then((response) => {
+                    if (response!.status === 200) {
+                        setWarning(
+                            updateObject(warning, {
+                                shown: false,
+                                message: ''
+                            })
+                        );
+                        setSuccess(
+                            updateObject(success, {
+                                shown: true,
+                                message:
+                                    'Rejestracja zakończona powodzeniem. Na podany adres email zostało wysłane Twoje hasło. Sprawdź również folder spam.'
+                            })
+                        );
+                    }
                 })
                 .catch((err) => {
                     setWarning(
@@ -108,16 +129,38 @@ const Login: React.FC<LoginProps> = (props) => {
                                 'Wystąpił błąd przy rejestracji. Spróbuj ponownie, a jeżeli błąd się powtarza skontaktuj się z administratorem.'
                         })
                     );
+                    setSuccess(
+                        updateObject(warning, {
+                            shown: false,
+                            message: ''
+                        })
+                    );
                     console.log(err);
                 });
         }
+    };
+
+    const cancelHandler = () => {
+        clickedCancel();
+        setWarning(
+            updateObject(warning, {
+                shown: false,
+                message: ''
+            })
+        );
+        setSuccess(
+            updateObject(warning, {
+                shown: false,
+                message: ''
+            })
+        );
     };
 
     const modalRef = useRef(null);
 
     useOutsideClick(modalRef, () => {
         if (opened) {
-            clickedCancel();
+            cancelHandler();
         }
     });
 
@@ -181,7 +224,8 @@ const Login: React.FC<LoginProps> = (props) => {
         </>
     );
 
-    const nodeRef = useRef(null);
+    const warningRef = useRef(null);
+    const successRef = useRef(null);
 
     // TODO Signup
 
@@ -189,14 +233,24 @@ const Login: React.FC<LoginProps> = (props) => {
         <Wrapper ref={modalRef}>
             <ModalContainer>
                 <CSSTransition
-                    nodeRef={nodeRef}
+                    nodeRef={warningRef}
                     in={warning.shown}
                     classNames="opacity"
                     timeout={400}
                     mountOnEnter
                     unmountOnExit
                 >
-                    <Warning ref={nodeRef}>{warning.message}</Warning>
+                    <Warning ref={warningRef}>{warning.message}</Warning>
+                </CSSTransition>
+                <CSSTransition
+                    nodeRef={successRef}
+                    in={success.shown}
+                    classNames="opacity"
+                    timeout={400}
+                    mountOnEnter
+                    unmountOnExit
+                >
+                    <Success ref={successRef}>{success.message}</Success>
                 </CSSTransition>
                 {isLogin ? login : signup}
                 <Row>
@@ -205,7 +259,7 @@ const Login: React.FC<LoginProps> = (props) => {
                     >
                         {isLogin ? 'Zaloguj się' : 'Zarejestruj się'}
                     </ModalButton>
-                    <ModalButton clicked={clickedCancel}>Anuluj</ModalButton>
+                    <ModalButton clicked={cancelHandler}>Anuluj</ModalButton>
                 </Row>
             </ModalContainer>
         </Wrapper>

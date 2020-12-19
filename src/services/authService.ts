@@ -63,15 +63,13 @@ const logout = async () => {
 
 const signUp = async (name: string, email: string) => {
     try {
-        await handleResponse(
-            await axiosInstanceAuth.post(
-                '/users/signup',
-                {
-                    name: name,
-                    email: email
-                },
-                { headers: { 'Content-Type': 'application/json' } }
-            )
+        return await axiosInstanceAuth.post(
+            '/users/signup',
+            {
+                name: name,
+                email: email
+            },
+            { headers: { 'Content-Type': 'application/json' } }
         );
     } catch (err) {
         console.log(err);

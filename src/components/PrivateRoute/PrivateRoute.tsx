@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { authService } from '../../services/authService';
+import { authService } from '../../services';
 import { store } from '../../store/store';
 
 interface RouteProps {

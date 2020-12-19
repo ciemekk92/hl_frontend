@@ -2,7 +2,7 @@ import React from 'react';
 import { Wrapper } from './Dashboard.styled';
 import { authService } from '../../services';
 
-const Dashboard: React.FC = (props) => {
+const Dashboard: React.FC = () => {
     const currentUser = authService.currentUserValue;
     return (
         <Wrapper>

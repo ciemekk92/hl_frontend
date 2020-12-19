@@ -9,7 +9,7 @@ import '../../transitions/transitions.css';
 import { authService } from '../../services';
 import { modalContext } from '../../context/modalContext';
 
-const Header: React.FC = (props) => {
+const Header: React.FC = () => {
     const [showMenu, setShowMenu] = useState(false);
 
     const logoutHandler = async () => {
