@@ -28,7 +28,7 @@ const CityContainer: React.FC<ContainerProps> = (props) => {
                     <IconChevronRight
                         size={24}
                         title={'Rozwiń'}
-                        color={'#f8d10d'}
+                        color={'#f3596b'}
                     />
                 </IconContainer>
             </PanelRow>

@@ -46,8 +46,8 @@ const ProductLinkingView: React.FC<PropsFromRedux> = (props) => {
                         <LinksTHeader> </LinksTHeader>
                         {links.map((element: Links) => (
                             <LinksTHeader key={element.productName}>
-                                {element.productName.length > 15
-                                    ? `${element.productName.substr(0, 15)}...`
+                                {element.productName.length > 17
+                                    ? `${element.productName.substr(0, 17)}...`
                                     : element.productName}
                             </LinksTHeader>
                         ))}
@@ -58,8 +58,8 @@ const ProductLinkingView: React.FC<PropsFromRedux> = (props) => {
                         <LinksTRow key={uuidv4()}>
                             <LinksTCell>
                                 {' '}
-                                {element.productName.length > 15
-                                    ? `${element.productName.substr(0, 15)}...`
+                                {element.productName.length > 17
+                                    ? `${element.productName.substr(0, 17)}...`
                                     : element.productName}
                             </LinksTCell>
                             {element.links.map((innerElement: Link) => (

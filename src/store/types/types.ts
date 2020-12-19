@@ -59,14 +59,9 @@ export interface Product {
     questions: ProductQuestion[];
 }
 
-interface CaseProduct {
-    name: string;
-    ingredients: { name: string; details: string }[];
-}
-
 export interface Case {
     name: string;
-    products: CaseProduct[];
+    products: string[];
 }
 
 interface SingleLocation {

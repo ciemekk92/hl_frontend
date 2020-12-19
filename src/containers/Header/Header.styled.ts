@@ -19,7 +19,7 @@ export const Wrapper = styled.header`
 export const LogoContainer = styled.div`
     width: 15rem;
     height: 3rem;
-    margin: auto 0 auto 2.8rem;
+    margin: auto 0 auto 4.5rem;
     display: flex;
     justify-content: center;
     align-items: center;

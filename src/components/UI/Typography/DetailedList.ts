@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const UnorderedList = styled.ul`
     font-size: 1.8rem;
-    margin: 0 2rem;
+    margin: 0 5.8rem;
 `;
 
 export const ListItem = styled.li`
@@ -33,7 +33,8 @@ export const ToggleDetails = styled.p`
     }
 `;
 
-export const Explanation = styled.li`
+export const Explanation = styled.p`
     list-style: none;
-    margin: 0 2rem;
+    font-size: 1.8rem;
+    margin-left: 7rem;
 `;

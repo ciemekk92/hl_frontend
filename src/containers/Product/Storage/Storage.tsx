@@ -16,11 +16,9 @@ export const Storage: React.FC<ProductProps> = (props) => {
         <Wrapper>
             <Heading2>{product.name}</Heading2>
             <Heading3>Przechowywanie</Heading3>
-            <UnorderedList>
-                {product.storage.map((element) => (
-                    <DetailedList key={uuidv4()} element={element} />
-                ))}
-            </UnorderedList>
+            {product.storage.map((element) => (
+                <DetailedList key={uuidv4()} element={element} />
+            ))}
         </Wrapper>
     );
 };

@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
 export const CityPanel = styled.div<LocationsProps>`
     width: 90%;
     max-height: 24rem;
-    background-color: #eee;
+    background-color: #f6dfd0;
     border-radius: 0.3rem;
     display: flex;
     flex-direction: column;
@@ -23,6 +23,11 @@ export const CityPanel = styled.div<LocationsProps>`
     margin-bottom: 1rem;
     font-size: 1.4rem;
     cursor: pointer;
+    transition: all 0.4s ease;
+
+    &:hover {
+        transform: translateY(-0.3rem);
+    }
 
     &:first-child {
         margin-top: 3rem;

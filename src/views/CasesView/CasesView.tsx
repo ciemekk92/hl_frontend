@@ -1,36 +1,30 @@
 import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { Case } from '../../store/types/types';
 import { connect, ConnectedProps } from 'react-redux';
-import { Question } from '../../store/types/types';
-import { Heading2 } from '../../components/UI/Typography';
+import { CaseLabel, CasePanel } from './CasesView.styled';
 import {
     IconContainer,
     PanelRow,
     Wrapper
 } from '../LocationsView/LocationsView.styled';
-import {
-    AnswerText,
-    QuestionLabel,
-    QuestionPanel
-} from './QuestionsView.styled';
 import IconChevronRight from '../../components/UI/Icons/IconChevronRight';
 import { CSSTransition } from 'react-transition-group';
+import { Heading2 } from '../../components/UI/Typography';
+import { v4 as uuidv4 } from 'uuid';
 
-interface QuestionsProps {
-    element: Question;
+interface CasesProps {
+    element: Case;
 }
 
-const QuestionsContainer: React.FC<QuestionsProps> = (props) => {
+const CasesContainer: React.FC<CasesProps> = (props) => {
     const { element } = props;
 
     const [isActive, setIsActive] = useState(false);
 
     return (
-        <QuestionPanel onClick={() => setIsActive(!isActive)}>
+        <CasePanel onClick={() => setIsActive(!isActive)}>
             <PanelRow>
-                <QuestionLabel>
-                    {element.question.replace('&#x2F;', '/')}
-                </QuestionLabel>
+                <CaseLabel>{element.name}</CaseLabel>
                 <IconContainer active={isActive}>
                     <IconChevronRight
                         size={24}
@@ -47,26 +41,24 @@ const QuestionsContainer: React.FC<QuestionsProps> = (props) => {
                     unmountOnExit
                 >
                     <div>
-                        {element.answers.map((answer) => (
-                            <AnswerText key={answer.substr(0, 6)}>
-                                {answer}
-                            </AnswerText>
+                        {element.products.map((product) => (
+                            <p key={product.substr(0, 6)}>{product}</p>
                         ))}
                     </div>
                 </CSSTransition>
             </PanelRow>
-        </QuestionPanel>
+        </CasePanel>
     );
 };
 
-const QuestionsView: React.FC<PropsFromRedux> = (props) => {
-    const { questions } = props;
+const CasesView: React.FC<PropsFromRedux> = (props) => {
+    const { cases } = props;
 
     return (
         <Wrapper>
             <Heading2>Pytania i odpowiedzi</Heading2>
-            {questions.map((element: Question) => (
-                <QuestionsContainer element={element} key={uuidv4()} />
+            {cases.map((element: Case) => (
+                <CasesContainer element={element} key={uuidv4()} />
             ))}
         </Wrapper>
     );
@@ -74,15 +66,15 @@ const QuestionsView: React.FC<PropsFromRedux> = (props) => {
 
 const mapStateToProps = (state: {
     data: {
-        questions: Question[];
+        cases: Case[];
     };
 }) => {
     return {
-        questions: state.data.questions
+        cases: state.data.cases
     };
 };
 
 const connector = connect(mapStateToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export default connector(React.memo(QuestionsView));
+export default connector(React.memo(CasesView));

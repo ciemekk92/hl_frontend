@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const QuestionPanel = styled.div`
+export const CasePanel = styled.div`
     width: 90%;
     max-height: 36rem;
     background-color: #f6dfd0;
@@ -9,9 +9,9 @@ export const QuestionPanel = styled.div`
     flex-direction: column;
     align-items: center;
     margin-bottom: 1rem;
+    font-size: 1.4rem;
     cursor: pointer;
     transition: all 0.4s ease;
-    font-size: 1.8rem;
 
     &:hover {
         transform: translateY(-0.3rem);
@@ -22,12 +22,8 @@ export const QuestionPanel = styled.div`
     }
 `;
 
-export const QuestionLabel = styled.p`
+export const CaseLabel = styled.p`
     font-weight: 700;
     text-transform: uppercase;
-    font-size: 1.8rem;
-`;
-
-export const AnswerText = styled.p`
-    font-style: italic;
+    font-size: 1.4rem;
 `;

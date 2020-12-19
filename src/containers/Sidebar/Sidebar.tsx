@@ -42,9 +42,9 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
         { label: 'Przechowywanie', route: 'storage' },
         { label: 'Stosowanie', route: 'dosage' },
         { label: 'Skutki Uboczne', route: 'sideEffects' },
-        { label: 'Dla kogo polecamy?', route: 'recommendedFor' },
+        { label: 'Komu polecamy?', route: 'recommendedFor' },
         { label: 'Za zgodą lekarza', route: 'needsApproval' },
-        { label: 'Dla kogo nie polecamy?', route: 'notRecommendedFor' },
+        { label: 'Komu nie polecamy?', route: 'notRecommendedFor' },
         { label: 'Trudne pytania', route: 'questions' }
     ];
 
@@ -167,9 +167,11 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
             >
                 <PanelContainer>{productMapHandler}</PanelContainer>
             </CSSTransition>
-            <SidebarCategoryPanel clicked={casesLoadHandler}>
-                Choroby
-            </SidebarCategoryPanel>
+            <StyledLink to={`/cases`} replace>
+                <SidebarCategoryPanel clicked={casesLoadHandler}>
+                    Choroby
+                </SidebarCategoryPanel>
+            </StyledLink>
             <StyledLink to={'/questions'} replace>
                 <SidebarCategoryPanel clicked={questionsLoadHandler}>
                     Pytania i odpowiedzi

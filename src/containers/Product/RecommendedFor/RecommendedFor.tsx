@@ -13,12 +13,10 @@ export const RecommendedFor: React.FC<ProductProps> = (props) => {
     return (
         <Wrapper>
             <Heading2>{product.name}</Heading2>
-            <Heading3>Dla kogo polecamy?</Heading3>
-            <UnorderedList>
-                {product.recommendedFor.map((element) => (
-                    <DetailedList key={element.name} element={element} />
-                ))}
-            </UnorderedList>
+            <Heading3>Komu polecamy?</Heading3>
+            {product.recommendedFor.map((element) => (
+                <DetailedList key={element.name} element={element} />
+            ))}
         </Wrapper>
     );
 };

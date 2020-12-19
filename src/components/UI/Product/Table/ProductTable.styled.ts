@@ -6,6 +6,7 @@ export const Table = styled.table`
     border-collapse: collapse;
     margin-left: 5rem;
     padding-bottom: 5rem;
+    margin-bottom: 5rem;
 `;
 
 export const TRow = styled.tr``;
