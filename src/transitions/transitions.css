@@ -27,13 +27,13 @@
 
 .max-height-medium-enter-active {
     opacity: 1;
-    max-height: 36rem;
+    max-height: 48rem;
     transition: all 600ms ease;
 }
 
 .max-height-medium-exit {
     opacity: 1;
-    max-height: 36rem;
+    max-height: 48rem;
 }
 
 .max-height-medium-exit-active {

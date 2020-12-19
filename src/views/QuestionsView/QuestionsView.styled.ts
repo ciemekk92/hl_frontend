@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const QuestionPanel = styled.div`
     width: 90%;
-    max-height: 36rem;
+    max-height: 48rem;
     background-color: #f6dfd0;
     border-radius: 0.3rem;
     display: flex;
