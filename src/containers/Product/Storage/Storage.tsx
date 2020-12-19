@@ -1,9 +1,6 @@
 import React from 'react';
 import { ProductProps } from '../../../types';
-import {
-    Heading2,
-    Heading3
-} from '../../../components/UI/Typography';
+import { Heading2, Heading3 } from '../../../components/UI/Typography';
 import DetailedList from '../../../components/UI/DetailedList/DetailedList';
 import { Wrapper } from '../Shared.styled';
 import { v4 as uuidv4 } from 'uuid';
