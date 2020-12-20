@@ -4,7 +4,8 @@ import {
     Row,
     Text,
     ModalContainer,
-    Warning
+    Warning,
+    Success
 } from '../../components/UI/Modal/Modal.styled';
 import { CSSTransition } from 'react-transition-group';
 import ModalInput from '../../components/UI/Modal/ModalInput/ModalInput';
@@ -29,6 +30,11 @@ const ChangePassword: React.FC<ChangeProps> = (props) => {
 
     const [passwordData, setPasswordData] = useState(initialData);
     const [warning, setWarning] = useState({
+        shown: false,
+        message: ''
+    });
+
+    const [success, setSuccess] = useState({
         shown: false,
         message: ''
     });
@@ -60,14 +66,42 @@ const ChangePassword: React.FC<ChangeProps> = (props) => {
     const inputClearHandler = () => {
         clickedCancel();
         setPasswordData(initialData);
-        setWarning(updateObject(warning, { shown: false }));
+        setWarning(updateObject(warning, { shown: false, message: '' }));
+        setSuccess(updateObject(success, { shown: false, message: '' }));
     };
 
     const passwordChangeHandler = () => {
         authService
             .changePassword(passwordData)
-            .then(() => {
-                inputClearHandler();
+            .then((response) => {
+                if (response!.status === 200) {
+                    setWarning(
+                        updateObject(warning, {
+                            shown: false,
+                            message: ''
+                        })
+                    );
+                    setSuccess(
+                        updateObject(success, {
+                            shown: true,
+                            message: 'Hasło zostało zmienione.'
+                        })
+                    );
+                } else {
+                    setWarning(
+                        updateObject(warning, {
+                            shown: true,
+                            message:
+                                'Podczas zmiany hasła wystąpił nieoczekiwany błąd. Spróbuj ponownie później.'
+                        })
+                    );
+                    setSuccess(
+                        updateObject(success, {
+                            shown: false,
+                            message: ''
+                        })
+                    );
+                }
             })
             .catch((err) =>
                 err.message.includes(401)
@@ -95,6 +129,7 @@ const ChangePassword: React.FC<ChangeProps> = (props) => {
     };
 
     const nodeRef = useRef(null);
+    const successRef = useRef(null);
     const modalRef = useRef(null);
 
     useOutsideClick(modalRef, () => {
@@ -121,6 +156,16 @@ const ChangePassword: React.FC<ChangeProps> = (props) => {
                     unmountOnExit
                 >
                     <Warning ref={nodeRef}>{warning.message}</Warning>
+                </CSSTransition>
+                <CSSTransition
+                    nodeRef={successRef}
+                    in={success.shown}
+                    classNames="opacity"
+                    timeout={400}
+                    mountOnEnter
+                    unmountOnExit
+                >
+                    <Success ref={successRef}>{success.message}</Success>
                 </CSSTransition>
                 <Row>
                     <ModalInput

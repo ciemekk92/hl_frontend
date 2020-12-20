@@ -86,6 +86,7 @@ const changePassword = async (passwordData: {
             userInfo: any;
             token: string;
             tokenExpires: number;
+            status: number;
         } = await handleResponse(
             await axiosInstanceAuth.patch(
                 '/users/updatePassword',
@@ -101,7 +102,6 @@ const changePassword = async (passwordData: {
                 }
             )
         );
-
         await store.dispatch(
             setLoginInfo(
                 responseData.userInfo,
@@ -115,6 +115,8 @@ const changePassword = async (passwordData: {
             token: responseData.token,
             tokenExpires: responseData.tokenExpires
         });
+
+        return Promise.resolve({ status: responseData.status });
     } catch (err) {
         return Promise.reject(err);
     }
