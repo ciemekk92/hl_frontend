@@ -21,6 +21,8 @@ const App: React.FC = () => {
         //     );
         // };
 
+        // TODO change to correct url before deploying
+
         if (!cookie.load('firstUse')) {
             cookie.save('firstUse', 'true', {
                 httpOnly: false,

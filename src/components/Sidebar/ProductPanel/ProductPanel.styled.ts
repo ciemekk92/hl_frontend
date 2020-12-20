@@ -13,7 +13,7 @@ export const Panel = styled.div<PanelProps>`
     display: flex;
     align-items: center;
     justify-content: start;
-    padding-left: 4rem;
+    padding-left: 2.4rem;
     color: ${(props) => props.theme.primaryDark};
     cursor: pointer;
     background-color: ${(props) => props.theme.secondaryLight};

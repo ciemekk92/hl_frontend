@@ -59,24 +59,34 @@ export interface Product {
     questions: ProductQuestion[];
 }
 
-interface CaseProduct {
-    name: string;
-    ingredients: { name: string; details: string }[];
-}
-
 export interface Case {
     name: string;
-    products: CaseProduct[];
+    products: string[];
+}
+
+interface SingleLocation {
+    name: string;
+    address: string;
 }
 
 export interface BranchLocation {
-    city: string;
-    address: string;
+    name: string;
+    locations: SingleLocation[];
 }
 
 export interface Question {
     question: string;
-    answer: string;
+    answers: string[];
+}
+
+export interface Link {
+    name: string;
+    canUse: number;
+}
+
+export interface Links {
+    productName: string;
+    links: Link[];
 }
 
 export interface DataState {
@@ -84,6 +94,7 @@ export interface DataState {
     cases: Case[];
     locations: BranchLocation[];
     questions: Question[];
+    links: Links[];
 }
 
 // Action types
@@ -126,6 +137,7 @@ export const SET_PRODUCT_INFO = 'SET_PRODUCT_INFO';
 export const SET_CASES_INFO = 'SET_CASES_INFO';
 export const SET_LOCATIONS_INFO = 'SET_LOCATIONS_INFO';
 export const SET_QUESTIONS_INFO = 'SET_QUESTIONS_INFO';
+export const SET_LINKS_INFO = 'SET_LINKS_INFO';
 
 export interface SetProductInfoAction {
     type: typeof SET_PRODUCT_INFO;
@@ -147,8 +159,14 @@ export interface SetQuestionsInfoAction {
     questions: Question[];
 }
 
+export interface SetLinksInfoAction {
+    type: typeof SET_LINKS_INFO;
+    links: Links[];
+}
+
 export type DataActionTypes =
     | SetProductInfoAction
     | SetCasesInfoAction
     | SetLocationsInfoAction
-    | SetQuestionsInfoAction;
+    | SetQuestionsInfoAction
+    | SetLinksInfoAction;

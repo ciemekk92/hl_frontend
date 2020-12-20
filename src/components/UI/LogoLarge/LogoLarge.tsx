@@ -1,5 +1,5 @@
 import React from 'react';
-import { SVG } from '../../../types/SVG';
+import { SVG } from '../../../types';
 
 const LogoLarge: React.FC<SVG> = (props) => {
     const { size, title, color, style } = props;

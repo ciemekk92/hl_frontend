@@ -43,3 +43,10 @@ export const Warning = styled.p`
     color: ${(props) => props.theme.warningMedium};
     margin: 0 auto;
 `;
+
+export const Success = styled.p`
+    font-size: 1.6rem;
+    height: 2rem;
+    color: #8cf187;
+    margin: 0 auto 3rem;
+`;

@@ -2,7 +2,13 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import Dashboard from '../views/Dashboard/Dashboard';
 import { connect, ConnectedProps } from 'react-redux';
-import { Product } from '../store/types/types';
+import {
+    BranchLocation,
+    Case,
+    Links,
+    Product,
+    Question
+} from '../store/types/types';
 import {
     Ingredients,
     Storage,
@@ -13,9 +19,13 @@ import {
     Questions,
     NeedsApproval
 } from '../containers/Product';
+import LocationsView from '../views/LocationsView/LocationsView';
+import ProductLinkingView from '../views/ProductLinkingView/ProductLinkingView';
+import QuestionsView from '../views/QuestionsView/QuestionsView';
+import CasesView from '../views/CasesView/CasesView';
 
 const Routes: React.FC<PropsFromRedux> = (props) => {
-    const { products } = props;
+    const { products, locations, links, questions, cases } = props;
 
     const filterProducts = (productArray: Product[], renderProps: any) => {
         const filtered = productArray.filter(
@@ -111,6 +121,34 @@ const Routes: React.FC<PropsFromRedux> = (props) => {
                     />
                 </>
             ) : null}
+            {locations.length > 0 ? (
+                <Route
+                    exact
+                    path={'/locations'}
+                    render={(props) => <LocationsView />}
+                />
+            ) : null}
+            {links.length > 0 ? (
+                <Route
+                    exact
+                    path={'/links'}
+                    render={(props) => <ProductLinkingView />}
+                />
+            ) : null}
+            {questions.length > 0 ? (
+                <Route
+                    exact
+                    path={'/questions'}
+                    render={(props) => <QuestionsView />}
+                />
+            ) : null}
+            {cases.length > 0 ? (
+                <Route
+                    exact
+                    path={'/cases'}
+                    render={(props) => <CasesView />}
+                />
+            ) : null}
         </>
     );
 };
@@ -118,10 +156,18 @@ const Routes: React.FC<PropsFromRedux> = (props) => {
 const mapStateToProps = (state: {
     data: {
         products: Product[];
+        locations: BranchLocation[];
+        links: Links[];
+        questions: Question[];
+        cases: Case[];
     };
 }) => {
     return {
-        products: state.data.products
+        products: state.data.products,
+        locations: state.data.locations,
+        links: state.data.links,
+        questions: state.data.questions,
+        cases: state.data.cases
     };
 };
 

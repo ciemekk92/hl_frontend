@@ -3,10 +3,12 @@ import {
     DataActionTypes,
     DataState,
     SET_CASES_INFO,
+    SET_LINKS_INFO,
     SET_LOCATIONS_INFO,
     SET_PRODUCT_INFO,
     SET_QUESTIONS_INFO,
     SetCasesInfoAction,
+    SetLinksInfoAction,
     SetLocationsInfoAction,
     SetProductInfoAction,
     SetQuestionsInfoAction
@@ -16,7 +18,8 @@ const initialState: DataState = {
     products: [],
     cases: [],
     locations: [],
-    questions: []
+    questions: [],
+    links: []
 };
 
 // Actions:
@@ -44,6 +47,12 @@ const setQuestionsInfo = (state: DataState, action: SetQuestionsInfoAction) => {
     });
 };
 
+const setLinksInfo = (state: DataState, action: SetLinksInfoAction) => {
+    return updateObject(state, {
+        links: action.links
+    });
+};
+
 // Reducer
 const reducer = (state = initialState, action: DataActionTypes) => {
     switch (action.type) {
@@ -55,6 +64,8 @@ const reducer = (state = initialState, action: DataActionTypes) => {
             return setLocationsInfo(state, action);
         case SET_QUESTIONS_INFO:
             return setQuestionsInfo(state, action);
+        case SET_LINKS_INFO:
+            return setLinksInfo(state, action);
         default:
             return state;
     }

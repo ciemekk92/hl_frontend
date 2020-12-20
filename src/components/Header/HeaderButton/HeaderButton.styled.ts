@@ -16,8 +16,7 @@ export const Background = styled.div`
         box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
     }
 
-    &:active {
+    &:focus {
         background-color: ${(props) => props.theme.secondaryMedium};
-        transform: translateY(-0.1rem);
     }
 `;

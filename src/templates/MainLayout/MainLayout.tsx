@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Router, Route, BrowserRouter, Switch } from 'react-router-dom';
+import { Router, Route, HashRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { colorTheme } from '../../themes/colorTheme';
 import { Main, Wrapper } from './MainLayout.styled';
@@ -17,8 +17,8 @@ import { modalContext } from '../../context/modalContext';
 
 const { Provider } = modalContext;
 
-const MainLayout: React.FC = (props) => {
-    // TODO:  signing up, role splitting
+const MainLayout: React.FC = () => {
+    // TODO: role splitting
     const modalRef: React.Ref<HTMLDivElement> = useRef(null);
 
     const [currentUser, setCurrentUser] = useState({
@@ -54,7 +54,7 @@ const MainLayout: React.FC = (props) => {
     };
 
     const loggedInView = (
-        <BrowserRouter>
+        <HashRouter basename={'/'}>
             <Route
                 render={(props) => (
                     <>
@@ -66,12 +66,15 @@ const MainLayout: React.FC = (props) => {
                         </Main>
 
                         <Modal open={openModal} ref={modalRef}>
-                            <ChangePassword clickedCancel={closeModal} />
+                            <ChangePassword
+                                openModal={openModal}
+                                clickedCancel={closeModal}
+                            />
                         </Modal>
                     </>
                 )}
             />
-        </BrowserRouter>
+        </HashRouter>
     );
 
     const loggedOutView = (

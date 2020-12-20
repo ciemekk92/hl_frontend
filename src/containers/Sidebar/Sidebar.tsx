@@ -7,6 +7,7 @@ import '../../transitions/transitions.css';
 import {
     BranchLocation,
     Case,
+    Links,
     Product,
     Question
 } from '../../store/types/types';
@@ -19,7 +20,7 @@ import SubPanelContainer from '../../components/Sidebar/SubPanelContainer/SubPan
 import { updateObject } from '../../shared/utility';
 
 const Sidebar: React.FC<PropsFromRedux> = (props) => {
-    const { products, cases, questions, locations } = props;
+    const { products, cases, questions, locations, links } = props;
     const [activeTab, setActiveTab] = useState({ product: '', tab: '' });
 
     const [activeProduct, setActiveProduct] = useState('');
@@ -36,14 +37,14 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
         }
     };
 
-    const routes = [
+    const productRoutes = [
         { label: 'Składniki', route: 'ingredients' },
         { label: 'Przechowywanie', route: 'storage' },
         { label: 'Stosowanie', route: 'dosage' },
         { label: 'Skutki Uboczne', route: 'sideEffects' },
-        { label: 'Dla kogo polecamy?', route: 'recommendedFor' },
+        { label: 'Komu polecamy?', route: 'recommendedFor' },
         { label: 'Za zgodą lekarza', route: 'needsApproval' },
-        { label: 'Dla kogo nie polecamy?', route: 'notRecommendedFor' },
+        { label: 'Komu nie polecamy?', route: 'notRecommendedFor' },
         { label: 'Trudne pytania', route: 'questions' }
     ];
 
@@ -75,7 +76,7 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
                     {element.name}
                 </ProductPanel>
                 <SubPanelContainer active={activeProduct === element.name}>
-                    {routes.map((route) => {
+                    {productRoutes.map((route) => {
                         let currentRoute = products[index];
                         return currentRoute[`${route.route}` as keyof Product]
                             .length! > 0 || route.route === 'ingredients' ? (
@@ -83,6 +84,7 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
                                 <StyledLink
                                     to={`/products/${element.slug}/${route.route}`}
                                     key={uuidv4()}
+                                    replace
                                 >
                                     <ProductSubPanel
                                         active={
@@ -146,6 +148,12 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
         }
     };
 
+    const linksLoadHandler = async () => {
+        if (links.length === 0) {
+            await dataService.getAllLinks();
+        }
+    };
+
     return (
         <Wrapper>
             <SidebarCategoryPanel clicked={productLoadHandler}>
@@ -159,15 +167,26 @@ const Sidebar: React.FC<PropsFromRedux> = (props) => {
             >
                 <PanelContainer>{productMapHandler}</PanelContainer>
             </CSSTransition>
-            <SidebarCategoryPanel clicked={casesLoadHandler}>
-                Choroby
-            </SidebarCategoryPanel>
-            <SidebarCategoryPanel clicked={questionsLoadHandler}>
-                Trudne pytania
-            </SidebarCategoryPanel>
-            <SidebarCategoryPanel clicked={locationsLoadHandler}>
-                Gdzie nas znaleźć
-            </SidebarCategoryPanel>
+            <StyledLink to={`/cases`} replace>
+                <SidebarCategoryPanel clicked={casesLoadHandler}>
+                    Choroby
+                </SidebarCategoryPanel>
+            </StyledLink>
+            <StyledLink to={'/questions'} replace>
+                <SidebarCategoryPanel clicked={questionsLoadHandler}>
+                    Pytania i odpowiedzi
+                </SidebarCategoryPanel>
+            </StyledLink>
+            <StyledLink to={`/locations`} replace>
+                <SidebarCategoryPanel clicked={locationsLoadHandler}>
+                    Gdzie nas znaleźć
+                </SidebarCategoryPanel>
+            </StyledLink>
+            <StyledLink to={`/links`} replace>
+                <SidebarCategoryPanel clicked={linksLoadHandler}>
+                    Polecane połączenia
+                </SidebarCategoryPanel>
+            </StyledLink>
         </Wrapper>
     );
 };
@@ -178,13 +197,15 @@ const mapStateToProps = (state: {
         cases: Case[];
         questions: Question[];
         locations: BranchLocation[];
+        links: Links[];
     };
 }) => {
     return {
         products: state.data.products,
         cases: state.data.cases,
         questions: state.data.questions,
-        locations: state.data.locations
+        locations: state.data.locations,
+        links: state.data.links
     };
 };
 

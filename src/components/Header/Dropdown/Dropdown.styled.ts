@@ -28,7 +28,7 @@ export const Panel = styled.div`
     }
 
     &:hover {
-        background-color: #ddd;
+        background-color: ${(props) => props.theme.secondaryLight};
     }
 
     &:active {
