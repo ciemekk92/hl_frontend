@@ -227,8 +227,6 @@ const Login: React.FC<LoginProps> = (props) => {
     const warningRef = useRef(null);
     const successRef = useRef(null);
 
-    // TODO Signup
-
     return (
         <Wrapper ref={modalRef}>
             <ModalContainer>
