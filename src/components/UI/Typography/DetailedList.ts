@@ -36,5 +36,5 @@ export const ToggleDetails = styled.p`
 export const Explanation = styled.p`
     list-style: none;
     font-size: 1.8rem;
-    margin-left: 7rem;
+    margin: 0 0 1rem 7rem;
 `;

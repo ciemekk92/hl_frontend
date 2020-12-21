@@ -74,9 +74,7 @@ const DetailedDosage: React.FC<DosageProps> = (props) => {
                         mountOnEnter
                         unmountOnExit
                     >
-                        <DetailText style={{ marginBottom: '1rem' }}>
-                            {element.details}
-                        </DetailText>
+                        <DetailText>{element.details}</DetailText>
                     </CSSTransition>
                 ) : element.details.length > 1 ? (
                     <CSSTransition

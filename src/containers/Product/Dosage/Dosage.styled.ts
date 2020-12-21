@@ -17,12 +17,13 @@ export const DosageIconContainer = styled(IconContainer)`
 
 export const MainText = styled.p`
     margin: 0 0 0 1rem;
+    font-weight: 500;
 `;
 
 export const DetailText = styled.p`
     font-size: 1.8rem;
     font-style: italic;
-    margin-left: 8.5rem;
+    margin: 0 0 1rem 8.5rem;
 `;
 
 export const Explanation = styled.p`
