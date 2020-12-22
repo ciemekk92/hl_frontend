@@ -32,7 +32,7 @@ const DetailedList: React.FC<ListProps> = (props) => {
         <React.Fragment>
             <Row>
                 <IconCheckmark size={20} title={'Ważne!'} color={'#f5cab2'} />
-                <MainText>{typedElement.name}</MainText>
+                <MainText>{typedElement.name.replace('&lt;', '<')}</MainText>
                 {typedElement.details.length > 0 ? (
                     <IconContainer
                         toggle={showDetails}

@@ -18,7 +18,7 @@ export const Ingredients: React.FC<ProductProps> = (props) => {
             type as keyof IngredientsInterface
         ]!.ingredients.map((element: Ingredient) => (
             <TRow key={element.name}>
-                <TCell>{element.name}</TCell>
+                <TCell>{element.name.replace('&lt;', '<')}</TCell>
                 <TCell>{`${element.amount ? element.amount : ''} ${
                     element.unit ? element.unit : ''
                 }`}</TCell>
