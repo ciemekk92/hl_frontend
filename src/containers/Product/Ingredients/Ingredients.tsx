@@ -31,7 +31,7 @@ export const Ingredients: React.FC<ProductProps> = (props) => {
         <Wrapper>
             <Heading2>{product.name}</Heading2>
             <Heading3>
-                {!product.ingredients.night
+                {product.ingredients.night.ingredients.length === 0
                     ? 'Składniki:'
                     : product.ingredients.day.name}
             </Heading3>
