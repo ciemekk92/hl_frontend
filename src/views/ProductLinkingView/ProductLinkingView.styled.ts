@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface LinkProps {
     readonly fillColor?: number;
+    readonly selected?: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -42,7 +43,7 @@ export const LegendLabel = styled.p`
 `;
 
 export const LinksTable = styled.table`
-    width: 90%;
+    width: 96%;
     border: none;
     border-collapse: collapse;
     margin: 2rem auto 0;
@@ -50,17 +51,27 @@ export const LinksTable = styled.table`
 `;
 
 export const LinksTRow = styled.tr``;
-export const LinksTHeader = styled.th`
+export const LinksTHeader = styled.th<LinkProps>`
     text-align: center;
+    box-sizing: border-box;
     border: 1px solid #666;
     font-size: 1rem;
     padding: 0.5rem;
+    cursor: pointer;
+    ${(props) => (props.selected ? 'box-shadow: inset 0 0 0 2px #000;' : null)};
+    transition: all 0.4s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+    }
 `;
+
 export const LinksTCell = styled.td<LinkProps>`
     border: 1px solid #666;
     text-align: left;
     font-size: 1rem;
     padding: 0.3rem;
+    transition: all 0.4s ease;
     background-color: ${(props) =>
         props.fillColor === 0
             ? '#f35d45'
@@ -69,8 +80,19 @@ export const LinksTCell = styled.td<LinkProps>`
             : props.fillColor === 2
             ? '#8cf187'
             : 'transparent'};
+    ${(props) => (props.selected ? 'box-shadow: inset 0 0 0 2px #000;' : null)};
 
     &:first-child {
         font-weight: 700;
+    }
+`;
+
+export const LinksFirstCell = styled(LinksTCell)`
+    transition: all 0.4s ease;
+    cursor: pointer;
+    ${(props) => (props.selected ? 'box-shadow: inset 0 0 0 2px #000;' : null)};
+
+    &:hover {
+        transform: translateY(-2px);
     }
 `;

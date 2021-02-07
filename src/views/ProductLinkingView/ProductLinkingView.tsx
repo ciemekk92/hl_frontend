@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { connect, ConnectedProps } from 'react-redux';
 import { Link, Links } from '../../store/types/types';
@@ -8,6 +8,7 @@ import {
     LegendLabel,
     LinksTable,
     LinksTCell,
+    LinksFirstCell,
     LinksTHeader,
     LinksTRow,
     Wrapper
@@ -16,6 +17,24 @@ import { Heading2 } from '../../components/UI/Typography';
 
 const ProductLinkingView: React.FC<PropsFromRedux> = (props) => {
     const { links } = props;
+
+    interface ISelectedCell {
+        column: number | null;
+        row: number | null;
+    }
+
+    const [selectedCell, setSelectedCell] = useState<ISelectedCell>({
+        column: null,
+        row: null
+    });
+
+    const handleSelectColumn = (index: number) => {
+        setSelectedCell({ ...selectedCell, column: index });
+    };
+
+    const handleSelectRow = (index: number) => {
+        setSelectedCell({ ...selectedCell, row: index });
+    };
 
     return (
         <Wrapper>
@@ -44,34 +63,79 @@ const ProductLinkingView: React.FC<PropsFromRedux> = (props) => {
                 <thead>
                     <LinksTRow>
                         <LinksTHeader> </LinksTHeader>
-                        {links.map((element: Links) => (
-                            <LinksTHeader key={element.productName}>
-                                {element.productName.length > 17
-                                    ? `${element.productName.substr(0, 17)}...`
-                                    : element.productName}
-                            </LinksTHeader>
-                        ))}
+                        {links
+                            .slice()
+                            .sort((a, b) => {
+                                if (a.productName < b.productName) {
+                                    return -1;
+                                }
+                                if (a.productName > b.productName) {
+                                    return 1;
+                                }
+                                return 0;
+                            })
+                            .map((element: Links, index: number) => (
+                                <LinksTHeader
+                                    key={element.productName}
+                                    onClick={() => handleSelectColumn(index)}
+                                    selected={selectedCell.column === index}
+                                >
+                                    {element.productName.length > 17
+                                        ? `${element.productName.substr(
+                                              0,
+                                              17
+                                          )}...`
+                                        : element.productName}
+                                </LinksTHeader>
+                            ))}
                     </LinksTRow>
                 </thead>
                 <tbody>
-                    {links.map((element) => (
-                        <LinksTRow key={uuidv4()}>
-                            <LinksTCell>
-                                {' '}
-                                {element.productName.length > 17
-                                    ? `${element.productName.substr(0, 17)}...`
-                                    : element.productName}
-                            </LinksTCell>
-                            {element.links.map((innerElement: Link) => (
-                                <LinksTCell
-                                    fillColor={innerElement.canUse}
-                                    key={uuidv4()}
+                    {links
+                        .slice()
+                        .sort((a, b) => {
+                            if (a.productName < b.productName) {
+                                return -1;
+                            }
+                            if (a.productName > b.productName) {
+                                return 1;
+                            }
+                            return 0;
+                        })
+                        .map((element: Links, index: number) => (
+                            <LinksTRow key={uuidv4()}>
+                                <LinksFirstCell
+                                    onClick={() => handleSelectRow(index)}
+                                    selected={selectedCell.row === index}
                                 >
                                     {' '}
-                                </LinksTCell>
-                            ))}
-                        </LinksTRow>
-                    ))}
+                                    {element.productName.length > 17
+                                        ? `${element.productName.substr(
+                                              0,
+                                              17
+                                          )}...`
+                                        : element.productName}
+                                </LinksFirstCell>
+                                {element.links.map(
+                                    (
+                                        innerElement: Link,
+                                        innerIndex: number
+                                    ) => (
+                                        <LinksTCell
+                                            selected={
+                                                selectedCell.column ===
+                                                    innerIndex &&
+                                                selectedCell.row === index
+                                            }
+                                            fillColor={innerElement.canUse}
+                                            key={uuidv4()}
+                                        >
+                                            {' '}
+                                        </LinksTCell>
+                                    )
+                                )}
+                            </LinksTRow>
+                        ))}
                 </tbody>
             </LinksTable>
         </Wrapper>

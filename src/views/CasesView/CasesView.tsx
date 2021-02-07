@@ -56,7 +56,7 @@ const CasesView: React.FC<PropsFromRedux> = (props) => {
 
     return (
         <Wrapper>
-            <Heading2>Pytania i odpowiedzi</Heading2>
+            <Heading2>Choroby</Heading2>
             {cases.map((element: Case) => (
                 <CasesContainer element={element} key={uuidv4()} />
             ))}
